@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 import AST
 
-from lex5 import tokens
+from lex import tokens
 
 operations = {
     '+' : lambda x,y: x+y,
@@ -40,7 +40,7 @@ def p_statement(p):
         else:
             p[0] = p[1]
 
-def p_structure(p):
+def p_structure(p):CLI',
     '''structure : WHILE '(' expression ')' '{' program '}'
         | IF '(' expression ')' '{' program '}'
         | ':' ID '''
@@ -51,6 +51,25 @@ def p_structure(p):
     elif p[1].type == ":":
         p[0] = AST.ShowNode([p[2]])
 
+# Type area.
+def p_scene_type(p):
+    '''scene : SCENE '(' STRING ',' '[' id_list ']' ')'  '''
+    p[0] = AST.SceneNode(p[3], p[5])
+
+def p_cli_type(p):
+    '''cli : CLI'(' STRING ',' rect ')'  '''
+    p[0] = AST.CliNode(p[3], p[5])
+
+def p_rect_type(p):
+    '''rect : RECT'(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')'  '''
+    p[0] = AST.RectNode(p[3], p[5], p[7], p[9])
+
+def p_id_list(p):
+    '''id_list : ID
+    | ID ',' id_list '''
+    p[0] = AST.CliNode(p[3], p[5])
+
+# Expression area.
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
          | expression MULT_OP expression'''
@@ -64,6 +83,14 @@ def p_number(p):
 def p_variable(p):
     '''expression : ID'''
     #p[0] = variables[p[1]]
+    p[0] = AST.TokenNode(p[1])
+
+def p_scene(p):
+    '''expression : scene'''
+    p[0] = AST.TokenNode(p[1])
+
+def p_cli(p):
+    '''expression : CLI'''
     p[0] = AST.TokenNode(p[1])
 
 def p_parenthesis(p):

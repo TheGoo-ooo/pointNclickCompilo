@@ -126,6 +126,9 @@ class PrintNode(Node):
 class WhileNode(Node):
     type = 'while'
 
+class SceneNode(Node):
+    type = 'scene'
+
 class IfNode(Node):
     type = 'if'
 
