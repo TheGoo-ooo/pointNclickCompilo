@@ -41,8 +41,15 @@ def p_statement(p):
             p[0] = p[1]
 
 def p_structure(p):
-    '''structure : WHILE expression '{' program '}' '''
-    p[0] = AST.WhileNode([p[2], p[4]])
+    '''structure : WHILE '(' expression ')' '{' program '}'
+        | IF '(' expression ')' '{' program '}'
+        | ':' ID '''
+    if p[1] == 'while':
+        p[0] = AST.WhileNode([p[3], p[6]])
+    elif p[1].type == "if":
+        p[0] = AST.IfNode([p[3], p[6]])
+    elif p[1].type == ":":
+        p[0] = AST.ShowNode([p[2]])
 
 def p_expression_op(p):
     '''expression : expression ADD_OP expression

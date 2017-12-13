@@ -126,6 +126,12 @@ class PrintNode(Node):
 class WhileNode(Node):
     type = 'while'
 
+class IfNode(Node):
+    type = 'if'
+
+class ShowNode(Node):
+    type = ':'
+
 class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):

@@ -16,9 +16,10 @@ tokens = (
     'ADD_OP',
     'MULT_OP',
     'ID',
+    'STRING',
 ) + tuple(map(lambda s:s.upper(), reserved_words))
 
-literals = r'(){};='
+literals = r'(){}[],;:='
 
 # r : row, on évite les \.
 t_ignore = ' \t'
@@ -40,6 +41,10 @@ def t_ID(t):
     r'([a-zA-Z_][\w_]*)'
     if t.value in reserved_words:
         t.type = t.value.upper()
+    return t
+
+def t_STRING(t):
+    r'(\"[^\"]*\")'
     return t
 
 def t_newline(t):
