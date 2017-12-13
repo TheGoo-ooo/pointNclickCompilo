@@ -2,7 +2,13 @@ import ply.lex as lex
 
 reserved_words = (
     'while',
-    'print'
+    'if',
+    'print',
+    'CLI',
+    'RECT',
+    'SCENE',
+    'FUNC',
+    'IMG',
 )
 
 tokens = (
@@ -10,8 +16,6 @@ tokens = (
     'ADD_OP',
     'MULT_OP',
     'ID',
-    #'PARENT_L',
-    #'PARENT_R'
 ) + tuple(map(lambda s:s.upper(), reserved_words))
 
 literals = r'(){};='
@@ -38,15 +42,6 @@ def t_ID(t):
         t.type = t.value.upper()
     return t
 
-'''
-def t_PARENT_L(t):
-    r'[(]'
-    return t
-
-def t_PARENT_R(t):
-    r'[)]'
-    return t
-'''
 def t_newline(t):
     r'\n'
     t.lexer.lineno += len(t.value)
