@@ -19,7 +19,7 @@ tokens = (
     'STRING',
 ) + tuple(map(lambda s:s.upper(), reserved_words))
 
-literals = r'(){}[],;:='
+literals = r'(){}[],;:=<>.'
 
 # r : row, on évite les \.
 t_ignore = ' \t'
