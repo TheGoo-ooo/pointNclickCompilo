@@ -135,6 +135,12 @@ class IfNode(Node):
 class ShowNode(Node):
     type = ':'
 
+class RectNode(Node):
+    type = 'rect'
+    
+class CliNode(Node):
+    type = 'cli'
+    
 class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):

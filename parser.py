@@ -16,8 +16,6 @@ precedence = (
     ('right', 'UMINUS')
 )
 
-variables = {}
-
 def p_program(p):
     '''program : statement
         | statement ';'
@@ -27,12 +25,12 @@ def p_program(p):
     except IndexError:
         p[0] = AST.ProgramNode(p[1])
 
+#statement : id = { program }
 def p_statement(p):
     '''statement : ID '=' expression
         | structure
         | PRINT expression'''
     try:
-        #variables[p[1]] = p[3]
         p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
     except IndexError:
         if p[1] == 'print':
@@ -54,26 +52,25 @@ def p_structure(p):
 # Type area.
 def p_scene_type(p):
     '''scene : SCENE '(' STRING ',' '[' id_list ']' ')' '''
-    p[0] = AST.SceneNode(p[3], p[5])
+    p[0] = AST.SceneNode([p[3], p[5]])
 
 def p_cli_type(p):
-    '''cli : CLI '(' STRING ',' rect ')'  '''
-    p[0] = AST.CliNode(p[3], p[5])
+    '''cli : CLI '(' STRING ',' rect ')' '{' program '}' '''
+    p[0] = AST.CliNode([p[3], p[5], p[8]])
 
 def p_rect_type(p):
     '''rect : RECT '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')' '''
-    p[0] = AST.RectNode(p[3], p[5], p[7], p[9])
+    p[0] = AST.RectNode([p[3], p[5], p[7], p[9]])
 
 def p_id_list(p):
     '''id_list : ID
     | ID ',' id_list '''
-    p[0] = AST.CliNode(p[3], p[5])
+    p[0] = AST.CliNode([p[3], p[5]])
 
 # Expression area.
 def p_expression_op(p):
     '''expression : expression ADD_OP expression
-        | expression MULT_OP expression'''
-    #p[0] = operations[p[2]](p[1], p[3])
+         | expression MULT_OP expression'''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
 def p_number(p):
@@ -82,7 +79,6 @@ def p_number(p):
 
 def p_variable(p):
     '''expression : ID'''
-    #p[0] = variables[p[1]]
     p[0] = AST.TokenNode(p[1])
 
 def p_scene(p):
@@ -90,7 +86,7 @@ def p_scene(p):
     p[0] = AST.TokenNode(p[1])
 
 def p_cli(p):
-    '''expression : CLI'''
+    '''expression : cli'''
     p[0] = AST.TokenNode(p[1])
 
 def p_parenthesis(p):
