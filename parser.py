@@ -59,6 +59,8 @@ def p_scene_type(p):
 def p_cli_type(p):
     '''cli : CLI '(' STRING ',' rect ')' '{' program '}' '''
     p[0] = AST.CliNode([p[3], p[5], p[8]])
+    print(p[3])
+    print(AST.CliNode([p[3], p[5], p[8]]))
 
 def p_rect_type(p):
     '''rect : RECT '(' expression ',' expression ',' expression ',' expression ')' '''
