@@ -132,9 +132,15 @@ class SceneNode(Node):
 class IfNode(Node):
     type = 'if'
 
+class MemberNode(Node):
+    type = '.'
+    
 class ShowNode(Node):
     type = ':'
 
+class IdListNode(Node):
+    type = 'list'
+    
 class RectNode(Node):
     type = 'rect'
     

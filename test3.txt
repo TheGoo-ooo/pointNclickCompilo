@@ -1,1 +1,3 @@
-S1C1 = CLI("ASSETS/CLI1_1.PNG", RECT(-100,100,300,500)){ a = 1 }
+c1.FUNC = {
+a = 0
+}
