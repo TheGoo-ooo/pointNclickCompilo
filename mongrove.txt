@@ -1,0 +1,20 @@
+RENDU DU LEX
+Modifié pour plus de lisibilité.
+
+ID(S1C1)	=	CLI(CLI)	
+	(	
+	STRING("ASSETS/CLI1_1.PNG")	,	
+	RECT(RECT)	
+		(
+		NUMBER(100.0)
+		,
+		NUMBER(100.0)
+		,
+		NUMBER(300.0)
+		,
+		NUMBER(500.0)	
+		)
+	)
+{
+	ID(a)	=	NUMBER(1.0)
+}

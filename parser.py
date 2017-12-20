@@ -50,22 +50,26 @@ def p_structure(p):
         p[0] = AST.ShowNode([p[2]])
 
 # Type area.
+"""
 def p_scene_type(p):
     '''scene : SCENE '(' STRING ',' '[' id_list ']' ')' '''
     p[0] = AST.SceneNode([p[3], p[5]])
+"""
 
 def p_cli_type(p):
     '''cli : CLI '(' STRING ',' rect ')' '{' program '}' '''
     p[0] = AST.CliNode([p[3], p[5], p[8]])
 
 def p_rect_type(p):
-    '''rect : RECT '(' NUMBER ',' NUMBER ',' NUMBER ',' NUMBER ')' '''
+    '''rect : RECT '(' expression ',' expression ',' expression ',' expression ')' '''
     p[0] = AST.RectNode([p[3], p[5], p[7], p[9]])
 
+"""
 def p_id_list(p):
     '''id_list : ID
     | ID ',' id_list '''
     p[0] = AST.CliNode([p[3], p[5]])
+"""
 
 # Expression area.
 def p_expression_op(p):
@@ -81,9 +85,11 @@ def p_variable(p):
     '''expression : ID'''
     p[0] = AST.TokenNode(p[1])
 
+"""
 def p_scene(p):
     '''expression : scene'''
     p[0] = AST.TokenNode(p[1])
+"""
 
 def p_cli(p):
     '''expression : cli'''
@@ -111,7 +117,7 @@ if __name__ == "__main__":
     import os
 
     prog = open(sys.argv[1]).read()
-    result = yacc.parse(prog, debug=0)
+    result = yacc.parse(prog, debug=1)
     #print(result)
 
     graph = result.makegraphicaltree()
