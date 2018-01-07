@@ -92,6 +92,7 @@ def p_variable(p):
     '''expression : ID'''
     p[0] = AST.TokenNode(p[1])
     
+    
 def p_string(p):
     '''expression : STRING'''
     p[0] = AST.TokenNode(p[1])
@@ -113,11 +114,27 @@ def p_parenthesis(p):
     p[0] = p[2]
     
 def p_member(p):
-    '''member : iden '.' FUNC
-         | iten '.' IMG'''
-    p[0] = AST.MemberNode([p[1], p[3]])
+    '''member : iden '.' climember'''
+    #try:
+    p[0] = AST.MemberNode([p[1]])
+    #except :
+    #    p[0] = p[1]
+    print(":::")
     print(p[0])
-    print("äöäöäöäöäö")
+    
+def p_iden(p):
+    '''iden : ID '''
+    p[0] = AST.IdNode([p[1]])
+    
+def p_climember(p):
+    '''climember : FUNC
+        | IMG '''
+    #try:
+    p[0] = AST.CliMemberNode([p[1]])
+    #except :
+    #    p[0] = p[1]
+    print(":::")
+    print(p[0])
 
 def p_uminus(p):
     'expression : ADD_OP expression %prec UMINUS'

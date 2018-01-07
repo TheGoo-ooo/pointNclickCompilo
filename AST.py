@@ -33,6 +33,8 @@ class Node:
         result = "%s%s\n" % (prefix, repr(self))
         prefix += '|  '
         for c in self.children:
+            #print(str(c))
+            #print(str(type(c)))
             if not isinstance(c,Node):
                 result += "%s*** Error: Child of type %r: %r\n" % (prefix,type(c),c)
                 continue
@@ -134,7 +136,10 @@ class IfNode(Node):
 
 class MemberNode(Node):
     type = '.'
-    
+
+class CliMemberNode(Node):
+    type = 'climember'
+
 class ShowNode(Node):
     type = ':'
 
@@ -146,7 +151,10 @@ class RectNode(Node):
     
 class CliNode(Node):
     type = 'cli'
-    
+ 
+class IdNode(Node):
+    type = 'iden'
+ 
 class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):
