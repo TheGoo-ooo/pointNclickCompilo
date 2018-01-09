@@ -9,68 +9,78 @@ Rule 3     program -> statement ; program
 Rule 4     statement -> ID = expression
 Rule 5     statement -> member = expression
 Rule 6     statement -> structure
-Rule 7     statement -> PRINT expression
-Rule 8     structure -> WHILE ( expression ) { program }
-Rule 9     structure -> IF ( expression ) { program }
-Rule 10    structure -> : expression
-Rule 11    scene -> SCENE ( expression , [ id_list ] )
-Rule 12    cli -> CLI ( expression , rect ) { program }
-Rule 13    rect -> RECT ( expression , expression , expression , expression )
-Rule 14    id_list -> expression
-Rule 15    id_list -> expression , id_list
-Rule 16    expression -> expression ADD_OP expression
-Rule 17    expression -> expression MULT_OP expression
-Rule 18    expression -> NUMBER
-Rule 19    expression -> ID
-Rule 20    expression -> STRING
-Rule 21    expression -> scene
-Rule 22    expression -> { program }
-Rule 23    expression -> ( expression )
-Rule 24    member -> iden . climember
-Rule 25    iden -> ID
-Rule 26    climember -> FUNC
-Rule 27    climember -> IMG
-Rule 28    expression -> ADD_OP expression
+Rule 7     statement -> EMPTY
+Rule 8     statement -> PRINT expression
+Rule 9     structure -> WHILE ( expression ) { program }
+Rule 10    structure -> IF ( expression ) { program }
+Rule 11    structure -> : expression
+Rule 12    scene -> SCENE ( expression , [ id_list ] )
+Rule 13    cli -> CLI ( expression , rect ) { program }
+Rule 14    rect -> RECT ( expression , expression , expression , expression )
+Rule 15    id_list -> expression
+Rule 16    id_list -> expression , id_list
+Rule 17    expression -> expression ADD_OP expression
+Rule 18    expression -> expression MULT_OP expression
+Rule 19    expression -> NUMBER
+Rule 20    expression -> ID
+Rule 21    expression -> STRING
+Rule 22    expression -> scene
+Rule 23    expression -> cli
+Rule 24    expression -> { program }
+Rule 25    expression -> ( expression )
+Rule 26    member -> expression . climember
+Rule 27    expression -> expression [ expression ]
+Rule 28    climember -> FUNC
+Rule 29    climember -> IMG
+Rule 30    climember -> X
+Rule 31    climember -> Y
+Rule 32    climember -> W
+Rule 33    climember -> H
+Rule 34    expression -> ADD_OP expression
 
 Terminals, with rules where they appear
 
-(                    : 8 9 11 12 13 23
-)                    : 8 9 11 12 13 23
-,                    : 11 12 13 13 13 15
-.                    : 24
-:                    : 10
+(                    : 9 10 12 13 14 25
+)                    : 9 10 12 13 14 25
+,                    : 12 13 14 14 14 16
+.                    : 26
+:                    : 11
 ;                    : 2 3
 =                    : 4 5
-ADD_OP               : 16 28
-CLI                  : 12
-FUNC                 : 26
-ID                   : 4 19 25
-IF                   : 9
-IMG                  : 27
-MULT_OP              : 17
-NUMBER               : 18
-PRINT                : 7
-RECT                 : 13
-SCENE                : 11
-STRING               : 20
-WHILE                : 8
-[                    : 11
-]                    : 11
+ADD_OP               : 17 34
+CLI                  : 13
+EMPTY                : 7
+FUNC                 : 28
+H                    : 33
+ID                   : 4 20
+IF                   : 10
+IMG                  : 29
+MULT_OP              : 18
+NUMBER               : 19
+PRINT                : 8
+RECT                 : 14
+SCENE                : 12
+STRING               : 21
+W                    : 32
+WHILE                : 9
+X                    : 30
+Y                    : 31
+[                    : 12 27
+]                    : 12 27
 error                : 
-{                    : 8 9 12 22
-}                    : 8 9 12 22
+{                    : 9 10 13 24
+}                    : 9 10 13 24
 
 Nonterminals, with rules where they appear
 
-cli                  : 
-climember            : 24
-expression           : 4 5 7 8 9 10 11 12 13 13 13 13 14 15 16 16 17 17 23 28
-id_list              : 11 15
-iden                 : 24
+cli                  : 23
+climember            : 26
+expression           : 4 5 8 9 10 11 12 13 14 14 14 14 15 16 17 17 18 18 25 26 27 27 34
+id_list              : 12 16
 member               : 5
-program              : 3 8 9 12 22 0
-rect                 : 12
-scene                : 21
+program              : 3 9 10 13 24 0
+rect                 : 13
+scene                : 22
 statement            : 1 2 3
 structure            : 6
 
@@ -85,24 +95,47 @@ state 0
     (4) statement -> . ID = expression
     (5) statement -> . member = expression
     (6) statement -> . structure
-    (7) statement -> . PRINT expression
-    (24) member -> . iden . climember
-    (8) structure -> . WHILE ( expression ) { program }
-    (9) structure -> . IF ( expression ) { program }
-    (10) structure -> . : expression
-    (25) iden -> . ID
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
     ID              shift and go to state 3
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    :               shift and go to state 10
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
     program                        shift and go to state 1
     statement                      shift and go to state 2
-    member                         shift and go to state 4
-    structure                      shift and go to state 5
-    iden                           shift and go to state 7
+    expression                     shift and go to state 4
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 1
 
@@ -118,26 +151,42 @@ state 2
 
     $end            reduce using rule 1 (program -> statement .)
     }               reduce using rule 1 (program -> statement .)
-    ;               shift and go to state 11
+    ;               shift and go to state 21
 
 
 state 3
 
     (4) statement -> ID . = expression
-    (25) iden -> ID .
+    (20) expression -> ID .
 
-    =               shift and go to state 12
-    .               reduce using rule 25 (iden -> ID .)
+    =               shift and go to state 22
+    .               reduce using rule 20 (expression -> ID .)
+    ADD_OP          reduce using rule 20 (expression -> ID .)
+    MULT_OP         reduce using rule 20 (expression -> ID .)
+    [               reduce using rule 20 (expression -> ID .)
 
 
 state 4
 
-    (5) statement -> member . = expression
+    (26) member -> expression . . climember
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    =               shift and go to state 13
+    .               shift and go to state 23
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
 
 state 5
+
+    (5) statement -> member . = expression
+
+    =               shift and go to state 27
+
+
+state 6
 
     (6) statement -> structure .
 
@@ -146,78 +195,279 @@ state 5
     }               reduce using rule 6 (statement -> structure .)
 
 
-state 6
-
-    (7) statement -> PRINT . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 14
-    scene                          shift and go to state 19
-
 state 7
 
-    (24) member -> iden . . climember
+    (7) statement -> EMPTY .
 
-    .               shift and go to state 23
+    ;               reduce using rule 7 (statement -> EMPTY .)
+    $end            reduce using rule 7 (statement -> EMPTY .)
+    }               reduce using rule 7 (statement -> EMPTY .)
 
 
 state 8
 
-    (8) structure -> WHILE . ( expression ) { program }
+    (8) statement -> PRINT . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    (               shift and go to state 24
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
+    expression                     shift and go to state 28
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 9
 
-    (9) structure -> IF . ( expression ) { program }
+    (9) structure -> WHILE . ( expression ) { program }
 
-    (               shift and go to state 25
+    (               shift and go to state 30
 
 
 state 10
 
-    (10) structure -> : . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
+    (25) expression -> ( . expression )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
-    expression                     shift and go to state 26
-    scene                          shift and go to state 19
+    expression                     shift and go to state 31
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 11
+
+    (24) expression -> { . program }
+    (1) program -> . statement
+    (2) program -> . statement ;
+    (3) program -> . statement ; program
+    (4) statement -> . ID = expression
+    (5) statement -> . member = expression
+    (6) statement -> . structure
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    ID              shift and go to state 3
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    program                        shift and go to state 32
+    statement                      shift and go to state 2
+    expression                     shift and go to state 4
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 12
+
+    (10) structure -> IF . ( expression ) { program }
+
+    (               shift and go to state 33
+
+
+state 13
+
+    (11) structure -> : . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 34
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 14
+
+    (34) expression -> ADD_OP . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 35
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 15
+
+    (19) expression -> NUMBER .
+
+    .               reduce using rule 19 (expression -> NUMBER .)
+    ADD_OP          reduce using rule 19 (expression -> NUMBER .)
+    MULT_OP         reduce using rule 19 (expression -> NUMBER .)
+    [               reduce using rule 19 (expression -> NUMBER .)
+    ;               reduce using rule 19 (expression -> NUMBER .)
+    $end            reduce using rule 19 (expression -> NUMBER .)
+    }               reduce using rule 19 (expression -> NUMBER .)
+    )               reduce using rule 19 (expression -> NUMBER .)
+    ]               reduce using rule 19 (expression -> NUMBER .)
+    ,               reduce using rule 19 (expression -> NUMBER .)
+
+
+state 16
+
+    (21) expression -> STRING .
+
+    .               reduce using rule 21 (expression -> STRING .)
+    ADD_OP          reduce using rule 21 (expression -> STRING .)
+    MULT_OP         reduce using rule 21 (expression -> STRING .)
+    [               reduce using rule 21 (expression -> STRING .)
+    ;               reduce using rule 21 (expression -> STRING .)
+    $end            reduce using rule 21 (expression -> STRING .)
+    }               reduce using rule 21 (expression -> STRING .)
+    )               reduce using rule 21 (expression -> STRING .)
+    ]               reduce using rule 21 (expression -> STRING .)
+    ,               reduce using rule 21 (expression -> STRING .)
+
+
+state 17
+
+    (22) expression -> scene .
+
+    .               reduce using rule 22 (expression -> scene .)
+    ADD_OP          reduce using rule 22 (expression -> scene .)
+    MULT_OP         reduce using rule 22 (expression -> scene .)
+    [               reduce using rule 22 (expression -> scene .)
+    ;               reduce using rule 22 (expression -> scene .)
+    $end            reduce using rule 22 (expression -> scene .)
+    }               reduce using rule 22 (expression -> scene .)
+    )               reduce using rule 22 (expression -> scene .)
+    ]               reduce using rule 22 (expression -> scene .)
+    ,               reduce using rule 22 (expression -> scene .)
+
+
+state 18
+
+    (23) expression -> cli .
+
+    .               reduce using rule 23 (expression -> cli .)
+    ADD_OP          reduce using rule 23 (expression -> cli .)
+    MULT_OP         reduce using rule 23 (expression -> cli .)
+    [               reduce using rule 23 (expression -> cli .)
+    ;               reduce using rule 23 (expression -> cli .)
+    $end            reduce using rule 23 (expression -> cli .)
+    }               reduce using rule 23 (expression -> cli .)
+    )               reduce using rule 23 (expression -> cli .)
+    ]               reduce using rule 23 (expression -> cli .)
+    ,               reduce using rule 23 (expression -> cli .)
+
+
+state 19
+
+    (12) scene -> SCENE . ( expression , [ id_list ] )
+
+    (               shift and go to state 36
+
+
+state 20
+
+    (13) cli -> CLI . ( expression , rect ) { program }
+
+    (               shift and go to state 37
+
+
+state 21
 
     (2) program -> statement ; .
     (3) program -> statement ; . program
@@ -227,306 +477,429 @@ state 11
     (4) statement -> . ID = expression
     (5) statement -> . member = expression
     (6) statement -> . structure
-    (7) statement -> . PRINT expression
-    (24) member -> . iden . climember
-    (8) structure -> . WHILE ( expression ) { program }
-    (9) structure -> . IF ( expression ) { program }
-    (10) structure -> . : expression
-    (25) iden -> . ID
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
     $end            reduce using rule 2 (program -> statement ; .)
     }               reduce using rule 2 (program -> statement ; .)
     ID              shift and go to state 3
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    :               shift and go to state 10
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
     statement                      shift and go to state 2
-    program                        shift and go to state 27
-    member                         shift and go to state 4
-    structure                      shift and go to state 5
-    iden                           shift and go to state 7
-
-state 12
-
-    (4) statement -> ID = . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 28
-    scene                          shift and go to state 19
-
-state 13
-
-    (5) statement -> member = . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 29
-    scene                          shift and go to state 19
-
-state 14
-
-    (7) statement -> PRINT expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
-
-    ;               reduce using rule 7 (statement -> PRINT expression .)
-    $end            reduce using rule 7 (statement -> PRINT expression .)
-    }               reduce using rule 7 (statement -> PRINT expression .)
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
-
-
-state 15
-
-    (28) expression -> ADD_OP . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 32
-    scene                          shift and go to state 19
-
-state 16
-
-    (18) expression -> NUMBER .
-
-    ADD_OP          reduce using rule 18 (expression -> NUMBER .)
-    MULT_OP         reduce using rule 18 (expression -> NUMBER .)
-    ;               reduce using rule 18 (expression -> NUMBER .)
-    $end            reduce using rule 18 (expression -> NUMBER .)
-    }               reduce using rule 18 (expression -> NUMBER .)
-    )               reduce using rule 18 (expression -> NUMBER .)
-    ,               reduce using rule 18 (expression -> NUMBER .)
-    ]               reduce using rule 18 (expression -> NUMBER .)
-
-
-state 17
-
-    (19) expression -> ID .
-
-    ADD_OP          reduce using rule 19 (expression -> ID .)
-    MULT_OP         reduce using rule 19 (expression -> ID .)
-    ;               reduce using rule 19 (expression -> ID .)
-    $end            reduce using rule 19 (expression -> ID .)
-    }               reduce using rule 19 (expression -> ID .)
-    )               reduce using rule 19 (expression -> ID .)
-    ,               reduce using rule 19 (expression -> ID .)
-    ]               reduce using rule 19 (expression -> ID .)
-
-
-state 18
-
-    (20) expression -> STRING .
-
-    ADD_OP          reduce using rule 20 (expression -> STRING .)
-    MULT_OP         reduce using rule 20 (expression -> STRING .)
-    ;               reduce using rule 20 (expression -> STRING .)
-    $end            reduce using rule 20 (expression -> STRING .)
-    }               reduce using rule 20 (expression -> STRING .)
-    )               reduce using rule 20 (expression -> STRING .)
-    ,               reduce using rule 20 (expression -> STRING .)
-    ]               reduce using rule 20 (expression -> STRING .)
-
-
-state 19
-
-    (21) expression -> scene .
-
-    ADD_OP          reduce using rule 21 (expression -> scene .)
-    MULT_OP         reduce using rule 21 (expression -> scene .)
-    ;               reduce using rule 21 (expression -> scene .)
-    $end            reduce using rule 21 (expression -> scene .)
-    }               reduce using rule 21 (expression -> scene .)
-    )               reduce using rule 21 (expression -> scene .)
-    ,               reduce using rule 21 (expression -> scene .)
-    ]               reduce using rule 21 (expression -> scene .)
-
-
-state 20
-
-    (22) expression -> { . program }
-    (1) program -> . statement
-    (2) program -> . statement ;
-    (3) program -> . statement ; program
-    (4) statement -> . ID = expression
-    (5) statement -> . member = expression
-    (6) statement -> . structure
-    (7) statement -> . PRINT expression
-    (24) member -> . iden . climember
-    (8) structure -> . WHILE ( expression ) { program }
-    (9) structure -> . IF ( expression ) { program }
-    (10) structure -> . : expression
-    (25) iden -> . ID
-
-    ID              shift and go to state 3
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    :               shift and go to state 10
-
-    program                        shift and go to state 33
-    statement                      shift and go to state 2
-    member                         shift and go to state 4
-    structure                      shift and go to state 5
-    iden                           shift and go to state 7
-
-state 21
-
-    (23) expression -> ( . expression )
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 34
-    scene                          shift and go to state 19
+    program                        shift and go to state 38
+    expression                     shift and go to state 4
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 22
 
-    (11) scene -> SCENE . ( expression , [ id_list ] )
+    (4) statement -> ID = . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    (               shift and go to state 35
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
+    expression                     shift and go to state 39
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 23
 
-    (24) member -> iden . . climember
-    (26) climember -> . FUNC
-    (27) climember -> . IMG
+    (26) member -> expression . . climember
+    (28) climember -> . FUNC
+    (29) climember -> . IMG
+    (30) climember -> . X
+    (31) climember -> . Y
+    (32) climember -> . W
+    (33) climember -> . H
 
-    FUNC            shift and go to state 37
-    IMG             shift and go to state 38
+    FUNC            shift and go to state 41
+    IMG             shift and go to state 42
+    X               shift and go to state 43
+    Y               shift and go to state 44
+    W               shift and go to state 45
+    H               shift and go to state 46
 
-    climember                      shift and go to state 36
+    climember                      shift and go to state 40
 
 state 24
 
-    (8) structure -> WHILE ( . expression ) { program }
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
+    (17) expression -> expression ADD_OP . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
-    expression                     shift and go to state 39
-    scene                          shift and go to state 19
+    expression                     shift and go to state 47
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 25
 
-    (9) structure -> IF ( . expression ) { program }
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
+    (18) expression -> expression MULT_OP . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
-    expression                     shift and go to state 40
-    scene                          shift and go to state 19
+    expression                     shift and go to state 48
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 26
 
-    (10) structure -> : expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (27) expression -> expression [ . expression ]
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
 
-    ;               reduce using rule 10 (structure -> : expression .)
-    $end            reduce using rule 10 (structure -> : expression .)
-    }               reduce using rule 10 (structure -> : expression .)
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
 
+    expression                     shift and go to state 49
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
 
 state 27
+
+    (5) statement -> member = . expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 50
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 28
+
+    (8) statement -> PRINT expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ;               reduce using rule 8 (statement -> PRINT expression .)
+    $end            reduce using rule 8 (statement -> PRINT expression .)
+    }               reduce using rule 8 (statement -> PRINT expression .)
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 29
+
+    (20) expression -> ID .
+
+    ADD_OP          reduce using rule 20 (expression -> ID .)
+    MULT_OP         reduce using rule 20 (expression -> ID .)
+    [               reduce using rule 20 (expression -> ID .)
+    ;               reduce using rule 20 (expression -> ID .)
+    $end            reduce using rule 20 (expression -> ID .)
+    }               reduce using rule 20 (expression -> ID .)
+    )               reduce using rule 20 (expression -> ID .)
+    .               reduce using rule 20 (expression -> ID .)
+    ]               reduce using rule 20 (expression -> ID .)
+    ,               reduce using rule 20 (expression -> ID .)
+
+
+state 30
+
+    (9) structure -> WHILE ( . expression ) { program }
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 51
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 31
+
+    (25) expression -> ( expression . )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    )               shift and go to state 52
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 32
+
+    (24) expression -> { program . }
+
+    }               shift and go to state 53
+
+
+state 33
+
+    (10) structure -> IF ( . expression ) { program }
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 54
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 34
+
+    (11) structure -> : expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ;               reduce using rule 11 (structure -> : expression .)
+    $end            reduce using rule 11 (structure -> : expression .)
+    }               reduce using rule 11 (structure -> : expression .)
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 35
+
+    (34) expression -> ADD_OP expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    .               reduce using rule 34 (expression -> ADD_OP expression .)
+    ADD_OP          reduce using rule 34 (expression -> ADD_OP expression .)
+    MULT_OP         reduce using rule 34 (expression -> ADD_OP expression .)
+    [               reduce using rule 34 (expression -> ADD_OP expression .)
+    ;               reduce using rule 34 (expression -> ADD_OP expression .)
+    $end            reduce using rule 34 (expression -> ADD_OP expression .)
+    }               reduce using rule 34 (expression -> ADD_OP expression .)
+    )               reduce using rule 34 (expression -> ADD_OP expression .)
+    ]               reduce using rule 34 (expression -> ADD_OP expression .)
+    ,               reduce using rule 34 (expression -> ADD_OP expression .)
+
+  ! ADD_OP          [ shift and go to state 24 ]
+  ! MULT_OP         [ shift and go to state 25 ]
+  ! [               [ shift and go to state 26 ]
+
+
+state 36
+
+    (12) scene -> SCENE ( . expression , [ id_list ] )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 55
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 37
+
+    (13) cli -> CLI ( . expression , rect ) { program }
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 56
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 38
 
     (3) program -> statement ; program .
 
@@ -534,473 +907,796 @@ state 27
     }               reduce using rule 3 (program -> statement ; program .)
 
 
-state 28
+state 39
 
     (4) statement -> ID = expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
     ;               reduce using rule 4 (statement -> ID = expression .)
     $end            reduce using rule 4 (statement -> ID = expression .)
     }               reduce using rule 4 (statement -> ID = expression .)
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
-
-
-state 29
-
-    (5) statement -> member = expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
-
-    ;               reduce using rule 5 (statement -> member = expression .)
-    $end            reduce using rule 5 (statement -> member = expression .)
-    }               reduce using rule 5 (statement -> member = expression .)
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
-
-
-state 30
-
-    (16) expression -> expression ADD_OP . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 41
-    scene                          shift and go to state 19
-
-state 31
-
-    (17) expression -> expression MULT_OP . expression
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 42
-    scene                          shift and go to state 19
-
-state 32
-
-    (28) expression -> ADD_OP expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
-
-    ADD_OP          reduce using rule 28 (expression -> ADD_OP expression .)
-    MULT_OP         reduce using rule 28 (expression -> ADD_OP expression .)
-    ;               reduce using rule 28 (expression -> ADD_OP expression .)
-    $end            reduce using rule 28 (expression -> ADD_OP expression .)
-    }               reduce using rule 28 (expression -> ADD_OP expression .)
-    )               reduce using rule 28 (expression -> ADD_OP expression .)
-    ,               reduce using rule 28 (expression -> ADD_OP expression .)
-    ]               reduce using rule 28 (expression -> ADD_OP expression .)
-
-  ! ADD_OP          [ shift and go to state 30 ]
-  ! MULT_OP         [ shift and go to state 31 ]
-
-
-state 33
-
-    (22) expression -> { program . }
-
-    }               shift and go to state 43
-
-
-state 34
-
-    (23) expression -> ( expression . )
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
-
-    )               shift and go to state 44
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
-
-
-state 35
-
-    (11) scene -> SCENE ( . expression , [ id_list ] )
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
-
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
-
-    expression                     shift and go to state 45
-    scene                          shift and go to state 19
-
-state 36
-
-    (24) member -> iden . climember .
-
-    =               reduce using rule 24 (member -> iden . climember .)
-
-
-state 37
-
-    (26) climember -> FUNC .
-
-    =               reduce using rule 26 (climember -> FUNC .)
-
-
-state 38
-
-    (27) climember -> IMG .
-
-    =               reduce using rule 27 (climember -> IMG .)
-
-
-state 39
-
-    (8) structure -> WHILE ( expression . ) { program }
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
-
-    )               shift and go to state 46
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
 
 state 40
 
-    (9) structure -> IF ( expression . ) { program }
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (26) member -> expression . climember .
 
-    )               shift and go to state 47
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
+    =               reduce using rule 26 (member -> expression . climember .)
 
 
 state 41
 
-    (16) expression -> expression ADD_OP expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (28) climember -> FUNC .
 
-    ADD_OP          reduce using rule 16 (expression -> expression ADD_OP expression .)
-    ;               reduce using rule 16 (expression -> expression ADD_OP expression .)
-    $end            reduce using rule 16 (expression -> expression ADD_OP expression .)
-    }               reduce using rule 16 (expression -> expression ADD_OP expression .)
-    )               reduce using rule 16 (expression -> expression ADD_OP expression .)
-    ,               reduce using rule 16 (expression -> expression ADD_OP expression .)
-    ]               reduce using rule 16 (expression -> expression ADD_OP expression .)
-    MULT_OP         shift and go to state 31
-
-  ! MULT_OP         [ reduce using rule 16 (expression -> expression ADD_OP expression .) ]
-  ! ADD_OP          [ shift and go to state 30 ]
+    =               reduce using rule 28 (climember -> FUNC .)
 
 
 state 42
 
-    (17) expression -> expression MULT_OP expression .
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (29) climember -> IMG .
 
-    ADD_OP          reduce using rule 17 (expression -> expression MULT_OP expression .)
-    MULT_OP         reduce using rule 17 (expression -> expression MULT_OP expression .)
-    ;               reduce using rule 17 (expression -> expression MULT_OP expression .)
-    $end            reduce using rule 17 (expression -> expression MULT_OP expression .)
-    }               reduce using rule 17 (expression -> expression MULT_OP expression .)
-    )               reduce using rule 17 (expression -> expression MULT_OP expression .)
-    ,               reduce using rule 17 (expression -> expression MULT_OP expression .)
-    ]               reduce using rule 17 (expression -> expression MULT_OP expression .)
-
-  ! ADD_OP          [ shift and go to state 30 ]
-  ! MULT_OP         [ shift and go to state 31 ]
+    =               reduce using rule 29 (climember -> IMG .)
 
 
 state 43
 
-    (22) expression -> { program } .
+    (30) climember -> X .
 
-    ADD_OP          reduce using rule 22 (expression -> { program } .)
-    MULT_OP         reduce using rule 22 (expression -> { program } .)
-    ;               reduce using rule 22 (expression -> { program } .)
-    $end            reduce using rule 22 (expression -> { program } .)
-    }               reduce using rule 22 (expression -> { program } .)
-    )               reduce using rule 22 (expression -> { program } .)
-    ,               reduce using rule 22 (expression -> { program } .)
-    ]               reduce using rule 22 (expression -> { program } .)
+    =               reduce using rule 30 (climember -> X .)
 
 
 state 44
 
-    (23) expression -> ( expression ) .
+    (31) climember -> Y .
 
-    ADD_OP          reduce using rule 23 (expression -> ( expression ) .)
-    MULT_OP         reduce using rule 23 (expression -> ( expression ) .)
-    ;               reduce using rule 23 (expression -> ( expression ) .)
-    $end            reduce using rule 23 (expression -> ( expression ) .)
-    }               reduce using rule 23 (expression -> ( expression ) .)
-    )               reduce using rule 23 (expression -> ( expression ) .)
-    ,               reduce using rule 23 (expression -> ( expression ) .)
-    ]               reduce using rule 23 (expression -> ( expression ) .)
+    =               reduce using rule 31 (climember -> Y .)
 
 
 state 45
 
-    (11) scene -> SCENE ( expression . , [ id_list ] )
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (32) climember -> W .
 
-    ,               shift and go to state 48
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
+    =               reduce using rule 32 (climember -> W .)
 
 
 state 46
 
-    (8) structure -> WHILE ( expression ) . { program }
+    (33) climember -> H .
 
-    {               shift and go to state 49
+    =               reduce using rule 33 (climember -> H .)
 
 
 state 47
 
-    (9) structure -> IF ( expression ) . { program }
+    (17) expression -> expression ADD_OP expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    {               shift and go to state 50
+    .               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    ADD_OP          reduce using rule 17 (expression -> expression ADD_OP expression .)
+    [               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    ;               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    $end            reduce using rule 17 (expression -> expression ADD_OP expression .)
+    }               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    )               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    ]               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    ,               reduce using rule 17 (expression -> expression ADD_OP expression .)
+    MULT_OP         shift and go to state 25
+
+  ! MULT_OP         [ reduce using rule 17 (expression -> expression ADD_OP expression .) ]
+  ! ADD_OP          [ shift and go to state 24 ]
+  ! [               [ shift and go to state 26 ]
 
 
 state 48
 
-    (11) scene -> SCENE ( expression , . [ id_list ] )
+    (18) expression -> expression MULT_OP expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    [               shift and go to state 51
+    .               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    ADD_OP          reduce using rule 18 (expression -> expression MULT_OP expression .)
+    MULT_OP         reduce using rule 18 (expression -> expression MULT_OP expression .)
+    [               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    ;               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    $end            reduce using rule 18 (expression -> expression MULT_OP expression .)
+    }               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    )               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    ]               reduce using rule 18 (expression -> expression MULT_OP expression .)
+    ,               reduce using rule 18 (expression -> expression MULT_OP expression .)
+
+  ! ADD_OP          [ shift and go to state 24 ]
+  ! MULT_OP         [ shift and go to state 25 ]
+  ! [               [ shift and go to state 26 ]
 
 
 state 49
 
-    (8) structure -> WHILE ( expression ) { . program }
-    (1) program -> . statement
-    (2) program -> . statement ;
-    (3) program -> . statement ; program
-    (4) statement -> . ID = expression
-    (5) statement -> . member = expression
-    (6) statement -> . structure
-    (7) statement -> . PRINT expression
-    (24) member -> . iden . climember
-    (8) structure -> . WHILE ( expression ) { program }
-    (9) structure -> . IF ( expression ) { program }
-    (10) structure -> . : expression
-    (25) iden -> . ID
+    (27) expression -> expression [ expression . ]
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    ID              shift and go to state 3
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    :               shift and go to state 10
+    ]               shift and go to state 57
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
-    program                        shift and go to state 52
-    statement                      shift and go to state 2
-    member                         shift and go to state 4
-    structure                      shift and go to state 5
-    iden                           shift and go to state 7
 
 state 50
 
-    (9) structure -> IF ( expression ) { . program }
-    (1) program -> . statement
-    (2) program -> . statement ;
-    (3) program -> . statement ; program
-    (4) statement -> . ID = expression
-    (5) statement -> . member = expression
-    (6) statement -> . structure
-    (7) statement -> . PRINT expression
-    (24) member -> . iden . climember
-    (8) structure -> . WHILE ( expression ) { program }
-    (9) structure -> . IF ( expression ) { program }
-    (10) structure -> . : expression
-    (25) iden -> . ID
+    (5) statement -> member = expression .
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    ID              shift and go to state 3
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    :               shift and go to state 10
+    ;               reduce using rule 5 (statement -> member = expression .)
+    $end            reduce using rule 5 (statement -> member = expression .)
+    }               reduce using rule 5 (statement -> member = expression .)
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
-    program                        shift and go to state 53
-    statement                      shift and go to state 2
-    member                         shift and go to state 4
-    structure                      shift and go to state 5
-    iden                           shift and go to state 7
 
 state 51
 
-    (11) scene -> SCENE ( expression , [ . id_list ] )
-    (14) id_list -> . expression
-    (15) id_list -> . expression , id_list
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
+    (9) structure -> WHILE ( expression . ) { program }
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
+    )               shift and go to state 58
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
-    expression                     shift and go to state 54
-    id_list                        shift and go to state 55
-    scene                          shift and go to state 19
 
 state 52
 
-    (8) structure -> WHILE ( expression ) { program . }
+    (25) expression -> ( expression ) .
 
-    }               shift and go to state 56
+    .               reduce using rule 25 (expression -> ( expression ) .)
+    ADD_OP          reduce using rule 25 (expression -> ( expression ) .)
+    MULT_OP         reduce using rule 25 (expression -> ( expression ) .)
+    [               reduce using rule 25 (expression -> ( expression ) .)
+    ;               reduce using rule 25 (expression -> ( expression ) .)
+    $end            reduce using rule 25 (expression -> ( expression ) .)
+    }               reduce using rule 25 (expression -> ( expression ) .)
+    )               reduce using rule 25 (expression -> ( expression ) .)
+    ]               reduce using rule 25 (expression -> ( expression ) .)
+    ,               reduce using rule 25 (expression -> ( expression ) .)
 
 
 state 53
 
-    (9) structure -> IF ( expression ) { program . }
+    (24) expression -> { program } .
 
-    }               shift and go to state 57
+    .               reduce using rule 24 (expression -> { program } .)
+    ADD_OP          reduce using rule 24 (expression -> { program } .)
+    MULT_OP         reduce using rule 24 (expression -> { program } .)
+    [               reduce using rule 24 (expression -> { program } .)
+    ;               reduce using rule 24 (expression -> { program } .)
+    $end            reduce using rule 24 (expression -> { program } .)
+    }               reduce using rule 24 (expression -> { program } .)
+    )               reduce using rule 24 (expression -> { program } .)
+    ]               reduce using rule 24 (expression -> { program } .)
+    ,               reduce using rule 24 (expression -> { program } .)
 
 
 state 54
 
-    (14) id_list -> expression .
-    (15) id_list -> expression . , id_list
-    (16) expression -> expression . ADD_OP expression
-    (17) expression -> expression . MULT_OP expression
+    (10) structure -> IF ( expression . ) { program }
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    ]               reduce using rule 14 (id_list -> expression .)
-    ,               shift and go to state 58
-    ADD_OP          shift and go to state 30
-    MULT_OP         shift and go to state 31
+    )               shift and go to state 59
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
 
 state 55
 
-    (11) scene -> SCENE ( expression , [ id_list . ] )
+    (12) scene -> SCENE ( expression . , [ id_list ] )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    ]               shift and go to state 59
+    ,               shift and go to state 60
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
 
 state 56
 
-    (8) structure -> WHILE ( expression ) { program } .
+    (13) cli -> CLI ( expression . , rect ) { program }
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
 
-    ;               reduce using rule 8 (structure -> WHILE ( expression ) { program } .)
-    $end            reduce using rule 8 (structure -> WHILE ( expression ) { program } .)
-    }               reduce using rule 8 (structure -> WHILE ( expression ) { program } .)
+    ,               shift and go to state 61
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
 
 
 state 57
 
-    (9) structure -> IF ( expression ) { program } .
+    (27) expression -> expression [ expression ] .
 
-    ;               reduce using rule 9 (structure -> IF ( expression ) { program } .)
-    $end            reduce using rule 9 (structure -> IF ( expression ) { program } .)
-    }               reduce using rule 9 (structure -> IF ( expression ) { program } .)
+    .               reduce using rule 27 (expression -> expression [ expression ] .)
+    ADD_OP          reduce using rule 27 (expression -> expression [ expression ] .)
+    MULT_OP         reduce using rule 27 (expression -> expression [ expression ] .)
+    [               reduce using rule 27 (expression -> expression [ expression ] .)
+    ;               reduce using rule 27 (expression -> expression [ expression ] .)
+    $end            reduce using rule 27 (expression -> expression [ expression ] .)
+    }               reduce using rule 27 (expression -> expression [ expression ] .)
+    )               reduce using rule 27 (expression -> expression [ expression ] .)
+    ]               reduce using rule 27 (expression -> expression [ expression ] .)
+    ,               reduce using rule 27 (expression -> expression [ expression ] .)
 
 
 state 58
 
-    (15) id_list -> expression , . id_list
-    (14) id_list -> . expression
-    (15) id_list -> . expression , id_list
-    (16) expression -> . expression ADD_OP expression
-    (17) expression -> . expression MULT_OP expression
-    (18) expression -> . NUMBER
-    (19) expression -> . ID
-    (20) expression -> . STRING
-    (21) expression -> . scene
-    (22) expression -> . { program }
-    (23) expression -> . ( expression )
-    (28) expression -> . ADD_OP expression
-    (11) scene -> . SCENE ( expression , [ id_list ] )
+    (9) structure -> WHILE ( expression ) . { program }
 
-    NUMBER          shift and go to state 16
-    ID              shift and go to state 17
-    STRING          shift and go to state 18
-    {               shift and go to state 20
-    (               shift and go to state 21
-    ADD_OP          shift and go to state 15
-    SCENE           shift and go to state 22
+    {               shift and go to state 62
 
-    expression                     shift and go to state 54
-    id_list                        shift and go to state 60
-    scene                          shift and go to state 19
 
 state 59
 
-    (11) scene -> SCENE ( expression , [ id_list ] . )
+    (10) structure -> IF ( expression ) . { program }
 
-    )               shift and go to state 61
+    {               shift and go to state 63
 
 
 state 60
 
-    (15) id_list -> expression , id_list .
+    (12) scene -> SCENE ( expression , . [ id_list ] )
 
-    ]               reduce using rule 15 (id_list -> expression , id_list .)
+    [               shift and go to state 64
 
 
 state 61
 
-    (11) scene -> SCENE ( expression , [ id_list ] ) .
+    (13) cli -> CLI ( expression , . rect ) { program }
+    (14) rect -> . RECT ( expression , expression , expression , expression )
 
-    ADD_OP          reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    MULT_OP         reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    ;               reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    $end            reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    }               reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    )               reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    ,               reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
-    ]               reduce using rule 11 (scene -> SCENE ( expression , [ id_list ] ) .)
+    RECT            shift and go to state 66
+
+    rect                           shift and go to state 65
+
+state 62
+
+    (9) structure -> WHILE ( expression ) { . program }
+    (1) program -> . statement
+    (2) program -> . statement ;
+    (3) program -> . statement ; program
+    (4) statement -> . ID = expression
+    (5) statement -> . member = expression
+    (6) statement -> . structure
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    ID              shift and go to state 3
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 4
+    program                        shift and go to state 67
+    statement                      shift and go to state 2
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 63
+
+    (10) structure -> IF ( expression ) { . program }
+    (1) program -> . statement
+    (2) program -> . statement ;
+    (3) program -> . statement ; program
+    (4) statement -> . ID = expression
+    (5) statement -> . member = expression
+    (6) statement -> . structure
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    ID              shift and go to state 3
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 4
+    program                        shift and go to state 68
+    statement                      shift and go to state 2
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 64
+
+    (12) scene -> SCENE ( expression , [ . id_list ] )
+    (15) id_list -> . expression
+    (16) id_list -> . expression , id_list
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 69
+    id_list                        shift and go to state 70
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 65
+
+    (13) cli -> CLI ( expression , rect . ) { program }
+
+    )               shift and go to state 71
+
+
+state 66
+
+    (14) rect -> RECT . ( expression , expression , expression , expression )
+
+    (               shift and go to state 72
+
+
+state 67
+
+    (9) structure -> WHILE ( expression ) { program . }
+
+    }               shift and go to state 73
+
+
+state 68
+
+    (10) structure -> IF ( expression ) { program . }
+
+    }               shift and go to state 74
+
+
+state 69
+
+    (15) id_list -> expression .
+    (16) id_list -> expression . , id_list
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ]               reduce using rule 15 (id_list -> expression .)
+    ,               shift and go to state 75
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 70
+
+    (12) scene -> SCENE ( expression , [ id_list . ] )
+
+    ]               shift and go to state 76
+
+
+state 71
+
+    (13) cli -> CLI ( expression , rect ) . { program }
+
+    {               shift and go to state 77
+
+
+state 72
+
+    (14) rect -> RECT ( . expression , expression , expression , expression )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 78
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 73
+
+    (9) structure -> WHILE ( expression ) { program } .
+
+    ;               reduce using rule 9 (structure -> WHILE ( expression ) { program } .)
+    $end            reduce using rule 9 (structure -> WHILE ( expression ) { program } .)
+    }               reduce using rule 9 (structure -> WHILE ( expression ) { program } .)
+
+
+state 74
+
+    (10) structure -> IF ( expression ) { program } .
+
+    ;               reduce using rule 10 (structure -> IF ( expression ) { program } .)
+    $end            reduce using rule 10 (structure -> IF ( expression ) { program } .)
+    }               reduce using rule 10 (structure -> IF ( expression ) { program } .)
+
+
+state 75
+
+    (16) id_list -> expression , . id_list
+    (15) id_list -> . expression
+    (16) id_list -> . expression , id_list
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 69
+    id_list                        shift and go to state 79
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 76
+
+    (12) scene -> SCENE ( expression , [ id_list ] . )
+
+    )               shift and go to state 80
+
+
+state 77
+
+    (13) cli -> CLI ( expression , rect ) { . program }
+    (1) program -> . statement
+    (2) program -> . statement ;
+    (3) program -> . statement ; program
+    (4) statement -> . ID = expression
+    (5) statement -> . member = expression
+    (6) statement -> . structure
+    (7) statement -> . EMPTY
+    (8) statement -> . PRINT expression
+    (26) member -> . expression . climember
+    (9) structure -> . WHILE ( expression ) { program }
+    (10) structure -> . IF ( expression ) { program }
+    (11) structure -> . : expression
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    ID              shift and go to state 3
+    EMPTY           shift and go to state 7
+    PRINT           shift and go to state 8
+    WHILE           shift and go to state 9
+    IF              shift and go to state 12
+    :               shift and go to state 13
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 4
+    program                        shift and go to state 81
+    statement                      shift and go to state 2
+    member                         shift and go to state 5
+    structure                      shift and go to state 6
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 78
+
+    (14) rect -> RECT ( expression . , expression , expression , expression )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ,               shift and go to state 82
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 79
+
+    (16) id_list -> expression , id_list .
+
+    ]               reduce using rule 16 (id_list -> expression , id_list .)
+
+
+state 80
+
+    (12) scene -> SCENE ( expression , [ id_list ] ) .
+
+    .               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    ADD_OP          reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    MULT_OP         reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    [               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    ;               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    $end            reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    }               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    )               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    ]               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+    ,               reduce using rule 12 (scene -> SCENE ( expression , [ id_list ] ) .)
+
+
+state 81
+
+    (13) cli -> CLI ( expression , rect ) { program . }
+
+    }               shift and go to state 83
+
+
+state 82
+
+    (14) rect -> RECT ( expression , . expression , expression , expression )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 84
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 83
+
+    (13) cli -> CLI ( expression , rect ) { program } .
+
+    .               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    ADD_OP          reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    MULT_OP         reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    [               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    ;               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    $end            reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    }               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    )               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    ]               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+    ,               reduce using rule 13 (cli -> CLI ( expression , rect ) { program } .)
+
+
+state 84
+
+    (14) rect -> RECT ( expression , expression . , expression , expression )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ,               shift and go to state 85
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 85
+
+    (14) rect -> RECT ( expression , expression , . expression , expression )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 86
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 86
+
+    (14) rect -> RECT ( expression , expression , expression . , expression )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    ,               shift and go to state 87
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 87
+
+    (14) rect -> RECT ( expression , expression , expression , . expression )
+    (17) expression -> . expression ADD_OP expression
+    (18) expression -> . expression MULT_OP expression
+    (19) expression -> . NUMBER
+    (20) expression -> . ID
+    (21) expression -> . STRING
+    (22) expression -> . scene
+    (23) expression -> . cli
+    (24) expression -> . { program }
+    (25) expression -> . ( expression )
+    (27) expression -> . expression [ expression ]
+    (34) expression -> . ADD_OP expression
+    (12) scene -> . SCENE ( expression , [ id_list ] )
+    (13) cli -> . CLI ( expression , rect ) { program }
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 29
+    STRING          shift and go to state 16
+    {               shift and go to state 11
+    (               shift and go to state 10
+    ADD_OP          shift and go to state 14
+    SCENE           shift and go to state 19
+    CLI             shift and go to state 20
+
+    expression                     shift and go to state 88
+    scene                          shift and go to state 17
+    cli                            shift and go to state 18
+
+state 88
+
+    (14) rect -> RECT ( expression , expression , expression , expression . )
+    (17) expression -> expression . ADD_OP expression
+    (18) expression -> expression . MULT_OP expression
+    (27) expression -> expression . [ expression ]
+
+    )               shift and go to state 89
+    ADD_OP          shift and go to state 24
+    MULT_OP         shift and go to state 25
+    [               shift and go to state 26
+
+
+state 89
+
+    (14) rect -> RECT ( expression , expression , expression , expression ) .
+
+    )               reduce using rule 14 (rect -> RECT ( expression , expression , expression , expression ) .)
 

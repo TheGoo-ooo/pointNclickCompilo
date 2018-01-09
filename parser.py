@@ -19,7 +19,7 @@ precedence = (
 def p_program(p):
     '''program : statement
         | statement ';'
-        | statement ';' program'''
+        | statement ';' program '''
     try:
         p[0] = AST.ProgramNode([p[1]] + p[3].children)
     except IndexError:
@@ -27,19 +27,25 @@ def p_program(p):
     print("==========================")
     print(p[0])
 
-#statement : id = { program }
 def p_statement(p):
     '''statement : ID '=' expression
         | member '=' expression
         | structure
+        | EMPTY
         | PRINT expression'''
     try:
-        p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
+        if(isinstance(p[1], AST.Node)):
+            p[0] = AST.AssignNode([p[1], p[3]])
+        else:
+            p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
     except IndexError:
         if p[1] == 'print':
             p[0] = AST.PrintNode(p[2])
         else:
-            p[0] = p[1]
+            if(isinstance(p[1], AST.Node)):
+                p[0] = p[1]
+            else:
+                p[0] = AST.TokenNode(p[1])
             
 
 def p_structure(p):
@@ -63,6 +69,7 @@ def p_scene_type(p):
 def p_cli_type(p):
     '''cli : CLI '(' expression ',' rect ')' '{' program '}' '''
     p[0] = AST.CliNode([p[3], p[5], p[8]])
+    print(p[0])
 
 def p_rect_type(p):
     '''rect : RECT '(' expression ',' expression ',' expression ',' expression ')' '''
@@ -105,7 +112,7 @@ def p_cli(p):
     '''expression : cli'''
     p[0] = AST.CliNode(p[1])
     
-def p_cli(p):
+def p_cliprog(p):
     '''expression : '{' program '}' '''
     p[0] = AST.CliNode(p[2])
 
@@ -114,27 +121,33 @@ def p_parenthesis(p):
     p[0] = p[2]
     
 def p_member(p):
-    '''member : iden '.' climember'''
+    '''member : expression '.' climember'''
     #try:
-    p[0] = AST.MemberNode([p[1]])
+    p[0] = AST.MemberNode([p[1], p[3]])
     #except :
     #    p[0] = p[1]
     print(":::")
     print(p[0])
     
-def p_iden(p):
-    '''iden : ID '''
-    p[0] = AST.IdNode([p[1]])
+def p_rect(p):
+    '''expression : expression '[' expression ']' '''
+    p[0] = AST.TabNode([p[1], p[3]])
+    print(p[0])
     
 def p_climember(p):
     '''climember : FUNC
-        | IMG '''
+        | IMG 
+        | X
+        | Y
+        | W
+        | H '''
     #try:
-    p[0] = AST.CliMemberNode([p[1]])
-    #except :
-    #    p[0] = p[1]
     print(":::")
     print(p[0])
+    p[0] = AST.TokenNode(p[1])
+    #except :
+    #    p[0] = p[1]
+    
 
 def p_uminus(p):
     'expression : ADD_OP expression %prec UMINUS'

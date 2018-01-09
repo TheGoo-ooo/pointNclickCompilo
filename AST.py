@@ -137,9 +137,6 @@ class IfNode(Node):
 class MemberNode(Node):
     type = '.'
 
-class CliMemberNode(Node):
-    type = 'climember'
-
 class ShowNode(Node):
     type = ':'
 
@@ -154,6 +151,9 @@ class CliNode(Node):
  
 class IdNode(Node):
     type = 'iden'
+    
+class TabNode(Node):
+    type = 'tab'
  
 class EntryNode(Node):
     type = 'ENTRY'

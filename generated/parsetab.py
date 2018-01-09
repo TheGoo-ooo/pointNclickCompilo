@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "leftADD_OPleftMULT_OPrightUMINUSNUMBER ADD_OP MULT_OP ID STRING WHILE IF PRINT CLI RECT SCENE FUNC IMGprogram : statement\n        | statement ';'\n        | statement ';' programstatement : ID '=' expression\n        | member '=' expression\n        | structure\n        | PRINT expressionstructure : WHILE '(' expression ')' '{' program '}'\n        | IF '(' expression ')' '{' program '}'\n        | ':' expression scene : SCENE '(' expression ',' '[' id_list ']' ')' cli : CLI '(' expression ',' rect ')' '{' program '}' rect : RECT '(' expression ',' expression ',' expression ',' expression ')' id_list : expression\n    | expression ',' id_list expression : expression ADD_OP expression\n         | expression MULT_OP expressionexpression : NUMBERexpression : IDexpression : STRINGexpression : sceneexpression : '{' program '}' expression : '(' expression ')' member : iden '.' climemberiden : ID climember : FUNC\n        | IMG expression : ADD_OP expression %prec UMINUS"
+_lr_signature = "leftADD_OPleftMULT_OPrightUMINUSNUMBER ADD_OP MULT_OP ID STRING WHILE IF PRINT CLI RECT SCENE FUNC IMG X Y W H EMPTYprogram : statement\n        | statement ';'\n        | statement ';' program statement : ID '=' expression\n        | member '=' expression\n        | structure\n        | EMPTY\n        | PRINT expressionstructure : WHILE '(' expression ')' '{' program '}'\n        | IF '(' expression ')' '{' program '}'\n        | ':' expression scene : SCENE '(' expression ',' '[' id_list ']' ')' cli : CLI '(' expression ',' rect ')' '{' program '}' rect : RECT '(' expression ',' expression ',' expression ',' expression ')' id_list : expression\n    | expression ',' id_list expression : expression ADD_OP expression\n         | expression MULT_OP expressionexpression : NUMBERexpression : IDexpression : STRINGexpression : sceneexpression : cliexpression : '{' program '}' expression : '(' expression ')' member : expression '.' climemberexpression : expression '[' expression ']' climember : FUNC\n        | IMG \n        | X\n        | Y\n        | W\n        | H expression : ADD_OP expression %prec UMINUS"
     
-_lr_action_items = {'ID':([0,6,10,11,12,13,15,20,21,24,25,30,31,35,49,50,51,58,],[3,17,17,3,17,17,17,3,17,17,17,17,17,17,3,3,17,17,]),'PRINT':([0,11,20,49,50,],[6,6,6,6,6,]),'WHILE':([0,11,20,49,50,],[8,8,8,8,8,]),'IF':([0,11,20,49,50,],[9,9,9,9,9,]),':':([0,11,20,49,50,],[10,10,10,10,10,]),'$end':([1,2,5,11,14,16,17,18,19,26,27,28,29,32,41,42,43,44,56,57,61,],[0,-1,-6,-2,-7,-18,-19,-20,-21,-10,-3,-4,-5,-28,-16,-17,-22,-23,-8,-9,-11,]),'}':([2,5,11,14,16,17,18,19,26,27,28,29,32,33,41,42,43,44,52,53,56,57,61,],[-1,-6,-2,-7,-18,-19,-20,-21,-10,-3,-4,-5,-28,43,-16,-17,-22,-23,56,57,-8,-9,-11,]),';':([2,5,14,16,17,18,19,26,28,29,32,41,42,43,44,56,57,61,],[11,-6,-7,-18,-19,-20,-21,-10,-4,-5,-28,-16,-17,-22,-23,-8,-9,-11,]),'=':([3,4,36,37,38,],[12,13,-24,-26,-27,]),'.':([3,7,],[-25,23,]),'NUMBER':([6,10,12,13,15,21,24,25,30,31,35,51,58,],[16,16,16,16,16,16,16,16,16,16,16,16,16,]),'STRING':([6,10,12,13,15,21,24,25,30,31,35,51,58,],[18,18,18,18,18,18,18,18,18,18,18,18,18,]),'{':([6,10,12,13,15,21,24,25,30,31,35,46,47,51,58,],[20,20,20,20,20,20,20,20,20,20,20,49,50,20,20,]),'(':([6,8,9,10,12,13,15,21,22,24,25,30,31,35,51,58,],[21,24,25,21,21,21,21,21,35,21,21,21,21,21,21,21,]),'ADD_OP':([6,10,12,13,14,15,16,17,18,19,21,24,25,26,28,29,30,31,32,34,35,39,40,41,42,43,44,45,51,54,58,61,],[15,15,15,15,30,15,-18,-19,-20,-21,15,15,15,30,30,30,15,15,-28,30,15,30,30,-16,-17,-22,-23,30,15,30,15,-11,]),'SCENE':([6,10,12,13,15,21,24,25,30,31,35,51,58,],[22,22,22,22,22,22,22,22,22,22,22,22,22,]),'MULT_OP':([14,16,17,18,19,26,28,29,32,34,39,40,41,42,43,44,45,54,61,],[31,-18,-19,-20,-21,31,31,31,-28,31,31,31,31,-17,-22,-23,31,31,-11,]),')':([16,17,18,19,32,34,39,40,41,42,43,44,59,61,],[-18,-19,-20,-21,-28,44,46,47,-16,-17,-22,-23,61,-11,]),',':([16,17,18,19,32,41,42,43,44,45,54,61,],[-18,-19,-20,-21,-28,-16,-17,-22,-23,48,58,-11,]),']':([16,17,18,19,32,41,42,43,44,54,55,60,61,],[-18,-19,-20,-21,-28,-16,-17,-22,-23,-14,59,-15,-11,]),'FUNC':([23,],[37,]),'IMG':([23,],[38,]),'[':([48,],[51,]),}
+_lr_action_items = {'ID':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[3,29,29,3,29,29,3,29,29,29,29,29,29,29,29,29,3,3,29,29,29,3,29,29,29,]),'EMPTY':([0,11,21,62,63,77,],[7,7,7,7,7,7,]),'PRINT':([0,11,21,62,63,77,],[8,8,8,8,8,8,]),'WHILE':([0,11,21,62,63,77,],[9,9,9,9,9,9,]),'IF':([0,11,21,62,63,77,],[12,12,12,12,12,12,]),':':([0,11,21,62,63,77,],[13,13,13,13,13,13,]),'NUMBER':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,]),'STRING':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,]),'{':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,58,59,62,63,64,71,72,75,77,82,85,87,],[11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,62,63,11,11,11,77,11,11,11,11,11,11,]),'(':([0,8,9,10,11,12,13,14,19,20,21,22,24,25,26,27,30,33,36,37,62,63,64,66,72,75,77,82,85,87,],[10,10,30,10,10,33,10,10,36,37,10,10,10,10,10,10,10,10,10,10,10,10,10,72,10,10,10,10,10,10,]),'ADD_OP':([0,3,4,8,10,11,13,14,15,16,17,18,21,22,24,25,26,27,28,29,30,31,33,34,35,36,37,39,47,48,49,50,51,52,53,54,55,56,57,62,63,64,69,72,75,77,78,80,82,83,84,85,86,87,88,],[14,-20,24,14,14,14,14,14,-19,-21,-22,-23,14,14,14,14,14,14,24,-20,14,24,14,24,-34,14,14,24,-17,-18,24,24,24,-25,-24,24,24,24,-27,14,14,14,24,14,14,14,24,-12,14,-13,24,14,24,14,24,]),'SCENE':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,]),'CLI':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,]),'$end':([1,2,6,7,15,16,17,18,21,28,29,34,35,38,39,47,48,50,52,53,57,73,74,80,83,],[0,-1,-6,-7,-19,-21,-22,-23,-2,-8,-20,-11,-34,-3,-4,-17,-18,-5,-25,-24,-27,-9,-10,-12,-13,]),'}':([2,6,7,15,16,17,18,21,28,29,32,34,35,38,39,47,48,50,52,53,57,67,68,73,74,80,81,83,],[-1,-6,-7,-19,-21,-22,-23,-2,-8,-20,53,-11,-34,-3,-4,-17,-18,-5,-25,-24,-27,73,74,-9,-10,-12,83,-13,]),';':([2,6,7,15,16,17,18,28,29,34,35,39,47,48,50,52,53,57,73,74,80,83,],[21,-6,-7,-19,-21,-22,-23,-8,-20,-11,-34,-4,-17,-18,-5,-25,-24,-27,-9,-10,-12,-13,]),'=':([3,5,40,41,42,43,44,45,46,],[22,27,-26,-28,-29,-30,-31,-32,-33,]),'.':([3,4,15,16,17,18,29,35,47,48,52,53,57,80,83,],[-20,23,-19,-21,-22,-23,-20,-34,-17,-18,-25,-24,-27,-12,-13,]),'MULT_OP':([3,4,15,16,17,18,28,29,31,34,35,39,47,48,49,50,51,52,53,54,55,56,57,69,78,80,83,84,86,88,],[-20,25,-19,-21,-22,-23,25,-20,25,25,-34,25,25,-18,25,25,25,-25,-24,25,25,25,-27,25,25,-12,-13,25,25,25,]),'[':([3,4,15,16,17,18,28,29,31,34,35,39,47,48,49,50,51,52,53,54,55,56,57,60,69,78,80,83,84,86,88,],[-20,26,-19,-21,-22,-23,26,-20,26,26,-34,26,-17,-18,26,26,26,-25,-24,26,26,26,-27,64,26,26,-12,-13,26,26,26,]),')':([15,16,17,18,29,31,35,47,48,51,52,53,54,57,65,76,80,83,88,89,],[-19,-21,-22,-23,-20,52,-34,-17,-18,58,-25,-24,59,-27,71,80,-12,-13,89,-14,]),']':([15,16,17,18,29,35,47,48,49,52,53,57,69,70,79,80,83,],[-19,-21,-22,-23,-20,-34,-17,-18,57,-25,-24,-27,-15,76,-16,-12,-13,]),',':([15,16,17,18,29,35,47,48,52,53,55,56,57,69,78,80,83,84,86,],[-19,-21,-22,-23,-20,-34,-17,-18,-25,-24,60,61,-27,75,82,-12,-13,85,87,]),'FUNC':([23,],[41,]),'IMG':([23,],[42,]),'X':([23,],[43,]),'Y':([23,],[44,]),'W':([23,],[45,]),'H':([23,],[46,]),'RECT':([61,],[66,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,11,20,49,50,],[1,27,33,52,53,]),'statement':([0,11,20,49,50,],[2,2,2,2,2,]),'member':([0,11,20,49,50,],[4,4,4,4,4,]),'structure':([0,11,20,49,50,],[5,5,5,5,5,]),'iden':([0,11,20,49,50,],[7,7,7,7,7,]),'expression':([6,10,12,13,15,21,24,25,30,31,35,51,58,],[14,26,28,29,32,34,39,40,41,42,45,54,54,]),'scene':([6,10,12,13,15,21,24,25,30,31,35,51,58,],[19,19,19,19,19,19,19,19,19,19,19,19,19,]),'climember':([23,],[36,]),'id_list':([51,58,],[55,60,]),}
+_lr_goto_items = {'program':([0,11,21,62,63,77,],[1,32,38,67,68,81,]),'statement':([0,11,21,62,63,77,],[2,2,2,2,2,2,]),'expression':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[4,28,31,4,34,35,4,39,47,48,49,50,51,54,55,56,4,4,69,78,69,4,84,86,88,]),'member':([0,11,21,62,63,77,],[5,5,5,5,5,5,]),'structure':([0,11,21,62,63,77,],[6,6,6,6,6,6,]),'scene':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,]),'cli':([0,8,10,11,13,14,21,22,24,25,26,27,30,33,36,37,62,63,64,72,75,77,82,85,87,],[18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'climember':([23,],[40,]),'rect':([61,],[65,]),'id_list':([64,75,],[70,79,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,29 +29,35 @@ _lr_productions = [
   ('program -> statement','program',1,'p_program','parser.py',20),
   ('program -> statement ;','program',2,'p_program','parser.py',21),
   ('program -> statement ; program','program',3,'p_program','parser.py',22),
-  ('statement -> ID = expression','statement',3,'p_statement','parser.py',32),
-  ('statement -> member = expression','statement',3,'p_statement','parser.py',33),
-  ('statement -> structure','statement',1,'p_statement','parser.py',34),
+  ('statement -> ID = expression','statement',3,'p_statement','parser.py',31),
+  ('statement -> member = expression','statement',3,'p_statement','parser.py',32),
+  ('statement -> structure','statement',1,'p_statement','parser.py',33),
+  ('statement -> EMPTY','statement',1,'p_statement','parser.py',34),
   ('statement -> PRINT expression','statement',2,'p_statement','parser.py',35),
-  ('structure -> WHILE ( expression ) { program }','structure',7,'p_structure','parser.py',46),
-  ('structure -> IF ( expression ) { program }','structure',7,'p_structure','parser.py',47),
-  ('structure -> : expression','structure',2,'p_structure','parser.py',48),
-  ('scene -> SCENE ( expression , [ id_list ] )','scene',8,'p_scene_type','parser.py',59),
-  ('cli -> CLI ( expression , rect ) { program }','cli',9,'p_cli_type','parser.py',64),
-  ('rect -> RECT ( expression , expression , expression , expression )','rect',10,'p_rect_type','parser.py',68),
-  ('id_list -> expression','id_list',1,'p_id_list','parser.py',73),
-  ('id_list -> expression , id_list','id_list',3,'p_id_list','parser.py',74),
-  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','parser.py',83),
-  ('expression -> expression MULT_OP expression','expression',3,'p_expression_op','parser.py',84),
-  ('expression -> NUMBER','expression',1,'p_number','parser.py',88),
-  ('expression -> ID','expression',1,'p_variable','parser.py',92),
-  ('expression -> STRING','expression',1,'p_string','parser.py',97),
-  ('expression -> scene','expression',1,'p_scene','parser.py',101),
-  ('expression -> { program }','expression',3,'p_cli','parser.py',109),
-  ('expression -> ( expression )','expression',3,'p_parenthesis','parser.py',113),
-  ('member -> iden . climember','member',3,'p_member','parser.py',117),
-  ('iden -> ID','iden',1,'p_iden','parser.py',126),
-  ('climember -> FUNC','climember',1,'p_climember','parser.py',130),
-  ('climember -> IMG','climember',1,'p_climember','parser.py',131),
-  ('expression -> ADD_OP expression','expression',2,'p_uminus','parser.py',140),
+  ('structure -> WHILE ( expression ) { program }','structure',7,'p_structure','parser.py',52),
+  ('structure -> IF ( expression ) { program }','structure',7,'p_structure','parser.py',53),
+  ('structure -> : expression','structure',2,'p_structure','parser.py',54),
+  ('scene -> SCENE ( expression , [ id_list ] )','scene',8,'p_scene_type','parser.py',65),
+  ('cli -> CLI ( expression , rect ) { program }','cli',9,'p_cli_type','parser.py',70),
+  ('rect -> RECT ( expression , expression , expression , expression )','rect',10,'p_rect_type','parser.py',75),
+  ('id_list -> expression','id_list',1,'p_id_list','parser.py',80),
+  ('id_list -> expression , id_list','id_list',3,'p_id_list','parser.py',81),
+  ('expression -> expression ADD_OP expression','expression',3,'p_expression_op','parser.py',90),
+  ('expression -> expression MULT_OP expression','expression',3,'p_expression_op','parser.py',91),
+  ('expression -> NUMBER','expression',1,'p_number','parser.py',95),
+  ('expression -> ID','expression',1,'p_variable','parser.py',99),
+  ('expression -> STRING','expression',1,'p_string','parser.py',104),
+  ('expression -> scene','expression',1,'p_scene','parser.py',108),
+  ('expression -> cli','expression',1,'p_cli','parser.py',112),
+  ('expression -> { program }','expression',3,'p_cliprog','parser.py',116),
+  ('expression -> ( expression )','expression',3,'p_parenthesis','parser.py',120),
+  ('member -> expression . climember','member',3,'p_member','parser.py',124),
+  ('expression -> expression [ expression ]','expression',4,'p_rect','parser.py',133),
+  ('climember -> FUNC','climember',1,'p_climember','parser.py',138),
+  ('climember -> IMG','climember',1,'p_climember','parser.py',139),
+  ('climember -> X','climember',1,'p_climember','parser.py',140),
+  ('climember -> Y','climember',1,'p_climember','parser.py',141),
+  ('climember -> W','climember',1,'p_climember','parser.py',142),
+  ('climember -> H','climember',1,'p_climember','parser.py',143),
+  ('expression -> ADD_OP expression','expression',2,'p_uminus','parser.py',153),
 ]

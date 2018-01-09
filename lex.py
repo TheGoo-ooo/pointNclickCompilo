@@ -9,6 +9,11 @@ reserved_words = (
     'SCENE',
     'FUNC',
     'IMG',
+    'X',
+    'Y',
+    'W',
+    'H',
+    'empty'
 )
 
 tokens = (
