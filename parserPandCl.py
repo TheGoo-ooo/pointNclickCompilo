@@ -25,6 +25,7 @@ def p_program(p):
     except IndexError:
         p[0] = AST.ProgramNode(p[1])
     print("==========================")
+    print(p[0])
 
 def p_statement(p):
     '''statement : ID '=' expression
@@ -99,23 +100,27 @@ def p_variable(p):
     
 def p_string(p):
     '''expression : STRING'''
-    p[0] = AST.TokenNode(p[1])
+    p[0] = AST.PathNode(AST.TokenNode(p[1]))
     
 def p_scene(p):
     '''expression : scene'''
-    p[0] = AST.SceneNode(p[1])
+    p[0] = p[1]
 
 def p_cli(p):
     '''expression : cli'''
-    p[0] = AST.CliNode(p[1])
+    p[0] = p[1]
     
 def p_cliprog(p):
     '''expression : '{' program '}' '''
-    p[0] = AST.CliNode(p[2])
+    p[0] = AST.ProgramNode(p[2])
 
 def p_parenthesis(p):
     '''expression : '(' expression ')' '''
     p[0] = p[2]
+    
+def p_memberToExp(p):
+    ''' expression : member'''
+    p[0] = p[1]
     
 def p_member(p):
     '''member : expression '.' climember'''
@@ -124,10 +129,19 @@ def p_member(p):
     #except :
     #    p[0] = p[1]
     
+def p_condition(p):
+    ''' expression : expression '<' expression 
+        | expression '>' expression
+        | expression '<' '=' expression
+        | expression '>' '=' expression '''
+    try:
+        p[0] = AST.ConditionNode([p[1], AST.TokenNode(p[2]), AST.TokenNode(p[3]), p[4]])
+    except IndexError:
+        p[0] = AST.ConditionNode([p[1], AST.TokenNode(p[2]), p[3]])
+    
 def p_rect(p):
     '''expression : expression '[' expression ']' '''
     p[0] = AST.TabNode([p[1], p[3]])
-    print(p[0])
     
 def p_climember(p):
     '''climember : FUNC

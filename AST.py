@@ -161,8 +161,14 @@ class CliNode(Node):
 class IdNode(Node):
     type = 'iden'
     
+class ConditionNode(Node):
+    type = 'cond'
+    
 class TabNode(Node):
     type = 'tab'
+    
+class PathNode(Node):
+    type = 'path'
  
 class EntryNode(Node):
     type = 'ENTRY'

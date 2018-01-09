@@ -7,32 +7,35 @@ screen_x = 1000
 screen_y = 700
 t1 = 0
 tsum = 0
-img0 = pygame.image.load("Assets/cli1_2.png")
-img1 = pygame.image.load("Assets/bg1.png")
+img0 = pygame.image.load("ASSETS/CLI1_1.png")
+img1 = pygame.image.load("ASSETS/CLI1_2.PNG")
+img2 = pygame.image.load("ASSETS/CLI1_2.png")
+img3 = pygame.image.load("Assets/bg1.png")
 def f0():
-    a = 2.0
-    print(str(a))
+    S1C2['func'] = f0
+    S1C1['img'] = img1
+    while(S1['cli'][0]['geo']['x'] < 500.0):
+        S1['cli'][0]['geo']['x'] = S1['cli'][0]['geo']['x'] + 5.0
+
+def f1():
+
+def f2():
+    currentScene = S1
 
 
 #functiondefs
 
-a = 1.0
+S1C1 = {}
+S1C1 = {'img' : img0, 'geo' : {'x' : 100.0,'y' : 100.0,'h' : 300.0,'w' : 500.0}, 'func' : f0}
 S1C2 = {}
-S1C2 = {'img' : img0, 'geo' : {'x' : 400.0,'y' : 200.0,'h' : 300.0,'w' : 500.0}, 'func' : f0}
+S1C2 = {'img' : img2, 'geo' : {'x' : 400.0,'y' : 200.0,'h' : 300.0,'w' : 500.0}, 'func' : f1}
+S2C2 = {}
+S2C2 = {'img' : img2, 'geo' : {'x' : 100.0,'y' : 100.0,'h' : 300.0,'w' : 500.0}, 'func' : f2}
 S1 = {}
-S1 = {'bg' : img1, 'cli' : [S1C2]}
-while(a < 10.0):
-    a = a + 5.0
-    if(a):
-        A = 1.0
-        B = 2.0
-        print(str(A))
-S1['cli'][0]['geo']['x'] = S1['cli'][0]['geo']['x'] + 5.0
-while(S1['cli'][0]['geo']['x'] < 500.0):
-    S1['cli'][0]['geo']['x'] = S1['cli'][0]['geo']['x'] + 5.0
+S1 = {'bg' : img3, 'cli' : [S1C1, S1C2]}
 S2 = {}
-S2 = {'bg' : img1, 'cli' : [S1C2]}
-currentScene = S2
+S2 = {'bg' : img3, 'cli' : [S2C2]}
+currentScene = S1
 
 def printScene():
     global t1, tsum

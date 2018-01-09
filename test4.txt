@@ -1,1 +1,21 @@
-:test
+a = 1;
+S1C2 = CLI("Assets/cli1_2.png", RECT(400,200,300,500)){
+    a = 2;
+  print a
+};
+S1 = SCENE("Assets/bg1.png", [S1C2]);
+while(a < 10){
+    
+    a = a + 5;
+    if(a){
+        A = 1;
+	B = 2;
+	print A;
+    }
+};
+S1[0].X = S1[0].X + 5;
+while(S1[0].X < 500){
+        S1[0].X = S1[0].X + 5
+    };
+S2 = SCENE("Assets/bg1.png", [S1C2]);
+:S2

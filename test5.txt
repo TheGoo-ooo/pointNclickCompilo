@@ -1,0 +1,6 @@
+S1C2 = CLI("ASSETS/CLI1_2.png", RECT(400,200,300,500)){
+    empty
+};
+S1C2.FUNC = {
+   :S2;
+};
