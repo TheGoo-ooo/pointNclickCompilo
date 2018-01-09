@@ -134,6 +134,15 @@ class SceneNode(Node):
 class IfNode(Node):
     type = 'if'
 
+class EmptyProgramNode(Node):
+    type = 'emptyProgram'
+    def __init__(self, tok):
+        Node.__init__(self)
+        self.tok = tok
+
+    def __repr__(self):
+        return repr(self.tok)
+    
 class MemberNode(Node):
     type = '.'
 

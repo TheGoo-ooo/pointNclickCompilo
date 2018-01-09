@@ -25,7 +25,6 @@ def p_program(p):
     except IndexError:
         p[0] = AST.ProgramNode(p[1])
     print("==========================")
-    print(p[0])
 
 def p_statement(p):
     '''statement : ID '=' expression
@@ -45,7 +44,7 @@ def p_statement(p):
             if(isinstance(p[1], AST.Node)):
                 p[0] = p[1]
             else:
-                p[0] = AST.TokenNode(p[1])
+                p[0] = AST.EmptyProgramNode(p[1])
             
 
 def p_structure(p):
@@ -69,13 +68,11 @@ def p_scene_type(p):
 def p_cli_type(p):
     '''cli : CLI '(' expression ',' rect ')' '{' program '}' '''
     p[0] = AST.CliNode([p[3], p[5], p[8]])
-    print(p[0])
 
 def p_rect_type(p):
     '''rect : RECT '(' expression ',' expression ',' expression ',' expression ')' '''
     p[0] = AST.RectNode([p[3], p[5], p[7], p[9]])
-
-
+    
 def p_id_list(p):
     '''id_list : expression
     | expression ',' id_list '''
@@ -126,8 +123,6 @@ def p_member(p):
     p[0] = AST.MemberNode([p[1], p[3]])
     #except :
     #    p[0] = p[1]
-    print(":::")
-    print(p[0])
     
 def p_rect(p):
     '''expression : expression '[' expression ']' '''
@@ -142,8 +137,6 @@ def p_climember(p):
         | W
         | H '''
     #try:
-    print(":::")
-    print(p[0])
     p[0] = AST.TokenNode(p[1])
     #except :
     #    p[0] = p[1]
@@ -157,6 +150,7 @@ def p_uminus(p):
 def p_error(p):
     print ("syntax error in line %d" % p.lineno)
     yacc.errok()
+    
 def parse(program):
     return yacc.parse(program)
 
@@ -170,7 +164,7 @@ if __name__ == "__main__":
     result = yacc.parse(prog, debug=1)
     #print(result)
 
-    graph = result.makegraphicaltree()
-    name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
+    #graph = result.makegraphicaltree()
+    #name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
     #graph.write_pdf(name)
-    print("wrote ast to", name)
+    #print("wrote ast to", name)
