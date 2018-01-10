@@ -10,6 +10,8 @@ operations = {
 }
 imgDecleration = {}
 funcDecleration = {}
+funcDeclerationLength = 0
+isDefiningFunctions = False
 functiondefs = "\n#functiondefs\n\n"
 nbIndent = 0
 indent = "    "
@@ -60,6 +62,8 @@ def read(self):
 @addToClass(AST.AssignNode)
 def compile(self):
     global nbIndent
+    global funcDeclerationLength
+    global isDefiningFunctions
     bytecode = ""
     if(self.children[1].type == 'cli' or self.children[1].type == 'scene' or self.children[1].type == 'rect'):
         if(len(self.children[0].children) > 1):
@@ -69,25 +73,42 @@ def compile(self):
     if(self.children[1].type != 'Program'):
         bytecode += indent * nbIndent + self.children[0].compile() + " = " + str(self.children[1].compile()) + "\n"
     else:
+        print("Pass program")
+        print("len" + str(funcDeclerationLength))
         tmpNbIndent = nbIndent
         nbIndent = 1
-        funcDecleration.update({len(funcDecleration): self.children[1].compile()})
+        isDefiningFunctions = True
+        funcDeclerationLength += 1
+        funcID = funcDeclerationLength - 1
+        funcDecleration.update({int(funcDeclerationLength - 1): self.children[1].compile()})
+        funcDeclerationLength = len(funcDecleration)
+        isDefiningFunctions = False
+        #funcDecleration.update({len(funcDecleration): self.children[1].compile()})
         nbIndent = tmpNbIndent
-        bytecode += indent * nbIndent + self.children[0].compile() + " = f" + str(len(funcDecleration) - 1) + "\n"
+        bytecode += indent * nbIndent + self.children[0].compile() + " = f" + str(funcID) + "\n"
         
     return bytecode
     
 @addToClass(AST.EmptyProgramNode)
 def compile(self):
-    return ""
+    return indent * nbIndent + "print(None)\n"
     
 @addToClass(AST.ShowNode)
 def compile(self):
-    return indent * nbIndent + "currentScene = " + self.children[0].compile() + "\n"
+    bytecode = ""
+    if isDefiningFunctions:
+        bytecode += indent * nbIndent + "global currentScene\n"
+    bytecode += indent * nbIndent + "currentScene = " + self.children[0].compile() + "\n"
+    return bytecode
     
 @addToClass(AST.PrintNode)
 def compile(self):
-    return indent * nbIndent + "print(str(" + self.children[0].compile() + "))\n"
+    return indent * nbIndent + "printScene()\n"
+    
+@addToClass(AST.WaitNode)
+def compile(self):
+    return indent * nbIndent + "sleep(0.01)\n"
+    
 @addToClass(AST.ConditionNode)
 def compile(self):
     bytecode = ""
@@ -132,9 +153,9 @@ def compile(self):
     
 @addToClass(AST.MemberNode)
 def compile(self):
-    bytecode = self.children[0].compile() + "["
+    bytecode = self.children[0].compile()
     if(self.children[1].compile() != 'IMG' and self.children[1].compile() != 'FUNC'):
-        bytecode += "'geo']"
+        bytecode += "['geo']"
     bytecode += "['" + str(self.children[1].compile()).lower() + "']"
     #bytecode = "" + self.children[0].compile() + "." + self.children[1].compile();
     return bytecode
@@ -166,19 +187,26 @@ def compile(self):
 @addToClass(AST.CliNode)
 def compile(self):
     global nbIndent
+    global funcDeclerationLength
+    global isDefiningFunctions
     #if not self.children[0].compile() in imgDecleration:
     #    imgDecleration.update({self.children[0].compile() : len(imgDecleration)})
     self.children[0].compile()
     tmpNbIndent = nbIndent
     nbIndent = 1
-    funcDecleration.update({len(funcDecleration): self.children[2].compile()})
+    isDefiningFunctions = True
+    funcDeclerationLength += 1
+    funcID = funcDeclerationLength - 1
+    funcDecleration.update({int(funcDeclerationLength - 1): self.children[2].compile()})
+    funcDeclerationLength = len(funcDecleration)
+    isDefiningFunctions = False
     nbIndent = tmpNbIndent
     bytecode = "{'img' : img"
     bytecode += str(imgDecleration[self.children[0].read()])
     bytecode += ", 'geo' : "
     bytecode += self.children[1].compile()
     bytecode += ", 'func' : f"
-    bytecode += str(len(funcDecleration) - 1)
+    bytecode += str(funcID)
     bytecode += "}"
     return bytecode
     
@@ -251,8 +279,11 @@ if __name__ == "__main__":
     outfile.write("\n" + indent + indent + indent + indent + "sys.exit(0)")
     outfile.write("\n" + indent + indent + indent + "elif event.type == MOUSEBUTTONDOWN:")
     outfile.write("\n" + indent + indent + indent + indent + "(mX,mY) = pygame.mouse.get_pos()")
+    outfile.write("\n" + indent + indent + indent + indent + "isNotClicked = True")
     outfile.write("\n" + indent + indent + indent + indent + "for i in range(0,len(currentScene['cli'])):")
-    outfile.write("\n" + indent + indent + indent + indent + indent + "if(mX > currentScene['cli'][i]['geo']['x'] and mY > currentScene['cli'][i]['geo']['y'] and mX < currentScene['cli'][i]['geo']['w'] + currentScene['cli'][i]['geo']['x'] and mY < currentScene['cli'][i]['geo']['h'] + currentScene['cli'][i]['geo']['y']):")
-    outfile.write("\n" + indent + indent + indent + indent + indent + indent + "currentScene['cli'][i]['func']()")
+    outfile.write("\n" + indent + indent + indent + indent + indent + "if(isNotClicked):")
+    outfile.write("\n" + indent + indent + indent + indent + indent + indent +"if(mX > currentScene['cli'][i]['geo']['x'] and mY > currentScene['cli'][i]['geo']['y'] and mX < currentScene['cli'][i]['geo']['w'] + currentScene['cli'][i]['geo']['x'] and mY < currentScene['cli'][i]['geo']['h'] + currentScene['cli'][i]['geo']['y']):")
+    outfile.write("\n" + indent + indent + indent + indent + indent + indent + indent +"currentScene['cli'][i]['func']()")
+    outfile.write("\n" + indent + indent + indent + indent + indent + indent + indent + "isNotClicked = False")
     outfile.close()
     print("Wrote output to", name)

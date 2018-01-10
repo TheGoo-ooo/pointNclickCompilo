@@ -118,6 +118,10 @@ def p_parenthesis(p):
     '''expression : '(' expression ')' '''
     p[0] = p[2]
     
+def p_waitOneFrame(p):
+    '''statement : WAITONEFRAME '''
+    p[0] = AST.WaitNode(AST.TokenNode(p[1]))
+    
 def p_memberToExp(p):
     ''' expression : member'''
     p[0] = p[1]

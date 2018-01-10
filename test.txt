@@ -1,17 +1,19 @@
-S1C1 = CLI("ASSETS/CLI1_1.png", RECT(100,100,300,500)){
+S1C1 = CLI("Assets/cli1_1.png", RECT(100,100,500,300)){
     S1C2.FUNC = {
-    :S2
+    	:S2;
     };
 
-    S1C1.IMG = "ASSETS/CLI1_2.PNG";
+    S1C1.IMG = "Assets/cli1_2.PNG";
     while(S1[0].X < 500){
-        S1[0].X = S1[0].X + 5
+        S1[0].X = S1[0].X + 5;
+	print s1;
+	waitOneFrame
     };
 };
-S1C2 = CLI("ASSETS/CLI1_2.png", RECT(400,200,300,500)){
+S1C2 = CLI("Assets/cli1_2.png", RECT(400,200,500,300)){
     empty
 };
-S2C2 = CLI("ASSETS/CLI1_2.png", RECT(100,100,300,500)){
+S2C2 = CLI("Assets/cli1_2.png", RECT(100,100,500,300)){
     :S1
 };
 S1 = SCENE("Assets/bg1.png", [S1C1, S1C2]);

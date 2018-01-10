@@ -13,7 +13,8 @@ reserved_words = (
     'Y',
     'W',
     'H',
-    'empty'
+    'empty',
+    'waitOneFrame'
 )
 
 tokens = (

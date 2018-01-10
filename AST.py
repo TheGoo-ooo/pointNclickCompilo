@@ -160,6 +160,9 @@ class CliNode(Node):
  
 class IdNode(Node):
     type = 'iden'
+
+class WaitNode(Node):
+    type = 'wait'
     
 class ConditionNode(Node):
     type = 'cond'
