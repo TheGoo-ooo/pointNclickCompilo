@@ -1,0 +1,148 @@
+errupttext = CLI("Assets/text1.png", RECT(250,500,100,500)){
+	empty;
+};
+erruptgotovolcan = CLI("Assets/emptycli.png", RECT(250,250,100,500)){
+	erruptCliBIP.IMG = "Assets/BIPcontent.png";
+	errupt = SCENE("Assets/bg_erruption.png", [erruptCliBIP]); 
+	while(erruptCliBIP.X < 500){
+		erruptCliBIP.X = erruptCliBIP.X + 5;
+		print;
+		waitOneFrame;
+	};
+	while(erruptCliBIP.X < 500){
+		erruptCliBIP.X = erruptCliBIP.X + 5;
+		print;
+		waitOneFrame;
+	};
+	while(erruptCliBIP.Y > 200){
+		erruptCliBIP.Y = erruptCliBIP.Y - 3;
+		print;
+		waitOneFrame;
+	};
+	:sacrif;
+};
+erruptCliBIP = CLI("Assets/BIPnormal.png", RECT(150,500,90,120)){
+	erruptCliBIP.IMG = "Assets/BIPfache.png";
+	errupt = SCENE("Assets/bg_erruption.png", [erruptCliBIP, errupttext, erruptgotovolcan]);
+	:errupt;
+};
+sacrificetext = CLI("Assets/text2.png", RECT(250,500,100,500)){
+	empty;
+};
+sacrificetoaster = CLI("Assets/toaster.png", RECT(200,400,100,100)){
+	sacrificetext.IMG = "Assets/text3.png";
+    sacrifCliBIP.IMG = "Assets/BIPnormal.png";
+	sacrifCliBIP.FUNC = {
+		sacrificetext.IMG = "Assets/text6.png";
+		sacrifCliBIP.IMG = "Assets/BIPtendu.png";
+		sacrificetoaster.X = 745;
+		sacrificetoaster.Y = 440;
+		sacrificetoaster.FUNC = {
+			empty;
+		};
+		print;
+		a = 1;
+		while(a < 20){
+			a = a + 1;
+			waitOneFrame;
+            print;
+		};
+		while(sacrifCliBIP.Y < 700){
+			sacrifCliBIP.Y = sacrifCliBIP.Y + 5;
+			sacrificetoaster.Y = sacrificetoaster.Y + 5;
+			print;
+			waitOneFrame;
+		};
+		erruptCliBIP.X = 750;
+		erruptCliBIP.Y = 500;
+		erruptgotovolcan.FUNC = {
+			erruptCliBIP.IMG = "Assets/BIPtendu.png";
+			errupt = SCENE("Assets/bg_erruption.png", [erruptCliBIP, sacrificetoaster]); 
+            while(erruptCliBIP.X > 500){
+                erruptCliBIP.X = erruptCliBIP.X - 3;
+                sacrificetoaster.X = sacrificetoaster.X - 3;
+                print;
+                waitOneFrame;
+            };
+			while(erruptCliBIP.Y > 200){
+                erruptCliBIP.Y = erruptCliBIP.Y - 3;
+                sacrificetoaster.Y = sacrificetoaster.Y - 3;
+                print;
+                waitOneFrame;
+            };
+            sacrifLave.FUNC = {
+                print;
+            };
+            sacrif = SCENE("Assets/bg_sacrifice.png", [sacrifCliBIP, sacrificetext, sacrificetoaster, sacrifLave]);
+            :sacrif;
+            
+            sacrificetoaster.Y = 740;
+            sacrificetoaster.X = 745;
+            sacrificetext.IMG = "Assets/emptycli.png";
+            while(sacrifCliBIP.Y > 400){
+                sacrifCliBIP.Y = sacrifCliBIP.Y - 5;
+                sacrificetoaster.Y = sacrificetoaster.Y - 5;
+                print;
+                waitOneFrame;
+            };
+            sacrificetext.IMG = "Assets/text8.png";
+            sacrifLave.FUNC = {
+                sacrificetoaster.X = 350;
+                sacrificetoaster.Y = 150;
+                while(sacrificetoaster.Y < 300){
+                    sacrificetoaster.Y = sacrificetoaster.Y + 1;
+                    print;
+                    waitOneFrame;
+                };
+                sacrificetext.IMG = "Assets/text4.png";
+                while(sacrifCliBIP.Y < 700){
+                    sacrifCliBIP.Y = sacrifCliBIP.Y + 5;
+                    print;
+                    waitOneFrame;
+                };
+                :fin;
+            };
+		};
+		erruptCliBIP.IMG = "Assets/BIPtriste.png";
+		sacrificetext.IMG = "Assets/text7.png";
+        sacrificetoaster.Y = 540;
+        erruptCliBIP.FUNC = {
+            empty;
+        };
+		errupt = SCENE("Assets/bg_erruption.png", [erruptCliBIP, sacrificetoaster, sacrificetext, erruptgotovolcan]);
+		:errupt;
+	};
+	sacrif = SCENE("Assets/bg_sacrifice.png", [sacrifCliBIP, sacrificetext, sacrificetoaster, sacrifLave]);
+	:sacrif;
+};
+sacrifCliBIP = CLI("Assets/BIPwtf.png", RECT(750,400,90,120)){
+	sacrificetext.IMG = "Assets/text2.png";
+	sacrif = SCENE("Assets/bg_sacrifice.png", [sacrifCliBIP, sacrificetext, sacrificetoaster, sacrifLave]);
+	:sacrif;
+};
+sacrifLave = CLI("Assets/lavedisp.png", RECT(200,200,250,600)){
+	sacrificetoaster.X = 350;
+	sacrificetoaster.Y = 150;
+	while(sacrificetoaster.Y < 300){
+		sacrificetoaster.Y = sacrificetoaster.Y + 1;
+		print;
+		waitOneFrame;
+	};
+	sacrificetext.IMG = "Assets/text4.png";
+	while(sacrifCliBIP.Y < 700){
+		sacrifCliBIP.Y = sacrifCliBIP.Y + 5;
+		print;
+		waitOneFrame;
+	};
+	:fin;
+};
+heureutext = CLI("Assets/text5.png", RECT(250,500,100,500)){
+	empty;
+};
+heureuCliBIP = CLI("Assets/BIPcontent.png", RECT(150,500,90,120)){
+	empty;
+};
+sacrif = SCENE("Assets/bg_sacrifice.png", [sacrifCliBIP]);
+errupt = SCENE("Assets/bg_erruption.png", [erruptCliBIP]);
+fin = SCENE("Assets/bg_heureu.png", [heureuCliBIP, heureutext]);
+:errupt;

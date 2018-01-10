@@ -24,8 +24,6 @@ def p_program(p):
         p[0] = AST.ProgramNode([p[1]] + p[3].children)
     except IndexError:
         p[0] = AST.ProgramNode(p[1])
-    print("==========================")
-    print(p[0])
 
 def p_statement(p):
     '''statement : ID '=' expression
@@ -40,7 +38,7 @@ def p_statement(p):
             p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[3]])
     except IndexError:
         if p[1] == 'print':
-            p[0] = AST.PrintNode(p[1])
+            p[0] = AST.PrintNode(AST.TokenNode(p[1]))
         else:
             if(isinstance(p[1], AST.Node)):
                 p[0] = p[1]
@@ -128,10 +126,7 @@ def p_memberToExp(p):
     
 def p_member(p):
     '''member : expression '.' climember'''
-    #try:
     p[0] = AST.MemberNode([p[1], p[3]])
-    #except :
-    #    p[0] = p[1]
     
 def p_condition(p):
     ''' expression : expression '<' expression 
@@ -154,15 +149,11 @@ def p_climember(p):
         | Y
         | W
         | H '''
-    #try:
     p[0] = AST.TokenNode(p[1])
-    #except :
-    #    p[0] = p[1]
     
 
 def p_uminus(p):
     'expression : ADD_OP expression %prec UMINUS'
-    #p[0] = operations[p[1]](0,p[2])
     p[0] = AST.OpNode(p[1], [p[2]])
 
 def p_error(p):
@@ -180,8 +171,8 @@ if __name__ == "__main__":
 
     prog = open(sys.argv[1]).read()
     result = yacc.parse(prog, debug=1)
+    #pour récupérer l'arbre, décommanter les lignes suivantes :
     #print(result)
-
     #graph = result.makegraphicaltree()
     #name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
     #graph.write_pdf(name)

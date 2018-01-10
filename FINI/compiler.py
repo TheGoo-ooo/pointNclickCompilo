@@ -28,7 +28,6 @@ def compile(self):
 @addToClass(AST.TokenNode)
 def compile(self):
     bytecode = ""
-    #if isinstance(self.tok, str):
     bytecode += "%s" % self.tok
     return bytecode
 
@@ -73,8 +72,6 @@ def compile(self):
     if(self.children[1].type != 'Program'):
         bytecode += indent * nbIndent + self.children[0].compile() + " = " + str(self.children[1].compile()) + "\n"
     else:
-        print("Pass program")
-        print("len" + str(funcDeclerationLength))
         tmpNbIndent = nbIndent
         nbIndent = 1
         wasDefiningFunctions = isDefiningFunctions
@@ -82,9 +79,7 @@ def compile(self):
         funcDeclerationLength += 1
         funcID = funcDeclerationLength - 1
         funcDecleration.update({int(funcDeclerationLength - 1): self.children[1].compile()})
-        #funcDeclerationLength = len(funcDecleration)
         isDefiningFunctions = wasDefiningFunctions
-        #funcDecleration.update({len(funcDecleration): self.children[1].compile()})
         nbIndent = tmpNbIndent
         bytecode += indent * nbIndent + self.children[0].compile() + " = f" + str(funcID) + "\n"
         
@@ -122,18 +117,7 @@ def compile(self):
 @addToClass(AST.WhileNode)
 def compile(self):
     global nbIndent
-    #global bodyCount
     bytecode = ""
-    #tmpCount = bodyCount
-    #bodyCount += 1
-
-    #bytecode += "JMP cond%s\n" % tmpCount
-    #bytecode += "body%s: " % tmpCount
-    #bytecode += self.children[1].compile()
-    #bytecode += "cond%s: " % tmpCount
-    #bytecode +=  self.children[0].compile()
-    #bytecode += "JINZ body%s\n" %tmpCount
-    
     bytecode += indent * nbIndent + "while(" + self.children[0].compile() + "):\n"
     nbIndent += 1
     bytecode += self.children[1].compile()
@@ -158,7 +142,6 @@ def compile(self):
     if(self.children[1].compile() != 'IMG' and self.children[1].compile() != 'FUNC'):
         bytecode += "['geo']"
     bytecode += "['" + str(self.children[1].compile()).lower() + "']"
-    #bytecode = "" + self.children[0].compile() + "." + self.children[1].compile();
     return bytecode
     
 @addToClass(AST.TabNode)
@@ -167,8 +150,6 @@ def compile(self):
 
 @addToClass(AST.SceneNode)
 def compile(self):
-    #if not self.children[0].compile() in imgDecleration:
-    #    imgDecleration.update({self.children[0].compile() : len(imgDecleration)})
     self.children[0].compile()
     bytecode = "{'bg' : img"
     bytecode += str(imgDecleration[self.children[0].read()])
@@ -190,8 +171,6 @@ def compile(self):
     global nbIndent
     global funcDeclerationLength
     global isDefiningFunctions
-    #if not self.children[0].compile() in imgDecleration:
-    #    imgDecleration.update({self.children[0].compile() : len(imgDecleration)})
     self.children[0].compile()
     tmpNbIndent = nbIndent
     nbIndent = 1
@@ -200,7 +179,6 @@ def compile(self):
     funcDeclerationLength += 1
     funcID = funcDeclerationLength - 1
     funcDecleration.update({int(funcDeclerationLength - 1): self.children[2].compile()})
-    #funcDeclerationLength = len(funcDecleration)
     isDefiningFunctions = wasDefiningFunctions
     nbIndent = tmpNbIndent
     bytecode = "{'img' : img"
