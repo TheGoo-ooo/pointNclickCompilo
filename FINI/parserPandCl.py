@@ -44,7 +44,7 @@ def p_statement(p):
                 p[0] = p[1]
             else:
                 p[0] = AST.EmptyProgramNode(p[1])
-            
+
 
 def p_structure(p):
     '''structure : WHILE '(' expression ')' '{' program '}'
@@ -71,7 +71,7 @@ def p_cli_type(p):
 def p_rect_type(p):
     '''rect : RECT '(' expression ',' expression ',' expression ',' expression ')' '''
     p[0] = AST.RectNode([p[3], p[5], p[7], p[9]])
-    
+
 def p_id_list(p):
     '''id_list : expression
     | expression ',' id_list '''
@@ -94,12 +94,12 @@ def p_number(p):
 def p_variable(p):
     '''expression : ID'''
     p[0] = AST.TokenNode(p[1])
-    
-    
+
+
 def p_string(p):
     '''expression : STRING'''
     p[0] = AST.PathNode(AST.TokenNode(p[1]))
-    
+
 def p_scene(p):
     '''expression : scene'''
     p[0] = p[1]
@@ -107,7 +107,7 @@ def p_scene(p):
 def p_cli(p):
     '''expression : cli'''
     p[0] = p[1]
-    
+
 def p_cliprog(p):
     '''expression : '{' program '}' '''
     p[0] = AST.ProgramNode(p[2])
@@ -115,21 +115,21 @@ def p_cliprog(p):
 def p_parenthesis(p):
     '''expression : '(' expression ')' '''
     p[0] = p[2]
-    
+
 def p_waitOneFrame(p):
     '''statement : WAITONEFRAME '''
     p[0] = AST.WaitNode(AST.TokenNode(p[1]))
-    
+
 def p_memberToExp(p):
     ''' expression : member'''
     p[0] = p[1]
-    
+
 def p_member(p):
     '''member : expression '.' climember'''
     p[0] = AST.MemberNode([p[1], p[3]])
-    
+
 def p_condition(p):
-    ''' expression : expression '<' expression 
+    ''' expression : expression '<' expression
         | expression '>' expression
         | expression '<' '=' expression
         | expression '>' '=' expression '''
@@ -137,20 +137,20 @@ def p_condition(p):
         p[0] = AST.ConditionNode([p[1], AST.TokenNode(p[2]), AST.TokenNode(p[3]), p[4]])
     except IndexError:
         p[0] = AST.ConditionNode([p[1], AST.TokenNode(p[2]), p[3]])
-    
+
 def p_rect(p):
     '''expression : expression '[' expression ']' '''
     p[0] = AST.TabNode([p[1], p[3]])
-    
+
 def p_climember(p):
     '''climember : FUNC
-        | IMG 
+        | IMG
         | X
         | Y
         | W
         | H '''
     p[0] = AST.TokenNode(p[1])
-    
+
 
 def p_uminus(p):
     'expression : ADD_OP expression %prec UMINUS'
@@ -159,7 +159,7 @@ def p_uminus(p):
 def p_error(p):
     print ("syntax error in line %d" % p.lineno)
     yacc.errok()
-    
+
 def parse(program):
     return yacc.parse(program)
 
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     result = yacc.parse(prog, debug=1)
     #pour récupérer l'arbre, décommanter les lignes suivantes :
     #print(result)
-    #graph = result.makegraphicaltree()
-    #name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
-    #graph.write_pdf(name)
+    graph = result.makegraphicaltree()
+    name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
+    graph.write_pdf(name)
     #print("wrote ast to", name)

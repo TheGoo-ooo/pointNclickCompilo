@@ -15,12 +15,18 @@ isDefiningFunctions = False
 functiondefs = "\n#functiondefs\n\n"
 nbIndent = 0
 indent = "    "
+varList = {}
 
 bodyCount = 1 # Flag jump for while(cond){}
 
 @addToClass(AST.ProgramNode)
 def compile(self):
     bytecode = ""
+
+    if nbIndent < 2:
+        for var in varList:
+            bytecode += indent + "global " + str(var) + "\n"
+
     for c in self.children:
         bytecode += str(c.compile())
     return bytecode
@@ -53,22 +59,26 @@ def compile(self):
     bytecode = "img"
     bytecode += str(imgDecleration[self.children[0].compile()])
     return bytecode
-    
+
 @addToClass(AST.PathNode)
 def read(self):
     return self.children[0].compile()
-    
+
 @addToClass(AST.AssignNode)
 def compile(self):
     global nbIndent
     global funcDeclerationLength
     global isDefiningFunctions
     bytecode = ""
+
     if(self.children[1].type == 'cli' or self.children[1].type == 'scene' or self.children[1].type == 'rect'):
         if(len(self.children[0].children) > 1):
             bytecode += indent * nbIndent + self.children[0].children[0].compile() + " = {}\n"
         else:
             bytecode += indent * nbIndent + self.children[0].compile() + " = {}\n"
+    elif self.children[1].type != 'cli' or self.children[1].type != 'scene' or self.children[1].type != 'rect':
+        if not self.children[0].compile() in varList:
+            varList.update({ self.children[0].compile() : len(varList)})
     if(self.children[1].type != 'Program'):
         bytecode += indent * nbIndent + self.children[0].compile() + " = " + str(self.children[1].compile()) + "\n"
     else:
@@ -82,13 +92,13 @@ def compile(self):
         isDefiningFunctions = wasDefiningFunctions
         nbIndent = tmpNbIndent
         bytecode += indent * nbIndent + self.children[0].compile() + " = f" + str(funcID) + "\n"
-        
+
     return bytecode
-    
+
 @addToClass(AST.EmptyProgramNode)
 def compile(self):
     return indent * nbIndent + "print(None)\n"
-    
+
 @addToClass(AST.ShowNode)
 def compile(self):
     bytecode = ""
@@ -96,15 +106,15 @@ def compile(self):
         bytecode += indent * nbIndent + "global currentScene\n"
     bytecode += indent * nbIndent + "currentScene = " + self.children[0].compile() + "\n"
     return bytecode
-    
+
 @addToClass(AST.PrintNode)
 def compile(self):
     return indent * nbIndent + "printScene()\n"
-    
+
 @addToClass(AST.WaitNode)
 def compile(self):
     return indent * nbIndent + "sleep(0.01)\n"
-    
+
 @addToClass(AST.ConditionNode)
 def compile(self):
     bytecode = ""
@@ -113,7 +123,7 @@ def compile(self):
     else:
         bytecode = self.children[0].compile() + " " + self.children[1].compile() + " " + self.children[2].compile()
     return bytecode
-    
+
 @addToClass(AST.WhileNode)
 def compile(self):
     global nbIndent
@@ -135,7 +145,7 @@ def compile(self):
     nbIndent -= 1
 
     return bytecode
-    
+
 @addToClass(AST.MemberNode)
 def compile(self):
     bytecode = self.children[0].compile()
@@ -143,7 +153,7 @@ def compile(self):
         bytecode += "['geo']"
     bytecode += "['" + str(self.children[1].compile()).lower() + "']"
     return bytecode
-    
+
 @addToClass(AST.TabNode)
 def compile(self):
     return self.children[0].compile() + "['cli'][" + str(int(float(self.children[1].compile()))) + "]"
@@ -157,7 +167,7 @@ def compile(self):
     bytecode += self.children[1].compile()
     bytecode += "]}"
     return bytecode
-    
+
 @addToClass(AST.IdListNode)
 def compile(self):
     bytecode = ""
@@ -165,7 +175,7 @@ def compile(self):
     if(len(self.children) > 1):
         bytecode += ", " + self.children[1].compile()
     return bytecode
-    
+
 @addToClass(AST.CliNode)
 def compile(self):
     global nbIndent
@@ -189,7 +199,7 @@ def compile(self):
     bytecode += str(funcID)
     bytecode += "}"
     return bytecode
-    
+
 @addToClass(AST.RectNode)
 def compile(self):
     bytecode = "{'x' : "
@@ -202,13 +212,13 @@ def compile(self):
     bytecode += self.children[3].compile()
     bytecode += "}"
     return bytecode
-    
+
 def imgdeclarate():
     bytecode = ""
     for keys,values in imgDecleration.items():
         bytecode += "img" + str(values) + " = pygame.image.load(" + keys + ")\n"
     return bytecode
-    
+
 def funcdeclarate():
     global nbIndent
     bytecode = ""
@@ -217,7 +227,7 @@ def funcdeclarate():
         bytecode += "def f" + str(keys) + "():\n" + values + "\n"
         nbIndent -= 1
     return bytecode
-    
+
 if __name__ == "__main__":
     from parserPandCl import parse
     import sys, os
@@ -234,7 +244,7 @@ if __name__ == "__main__":
     outfile.write(funcdeclarate())
     outfile.write(functiondefs)
     outfile.write(compiled)
-    
+
     outfile.write("\ndef printScene():")
     outfile.write("\n" + indent + "global t1, tsum")
     outfile.write("\n" + indent + "t2 = time.time()")
@@ -248,9 +258,9 @@ if __name__ == "__main__":
     outfile.write("\n" + indent + indent + "pygame.display.flip()")
     outfile.write("\n" + "if __name__ == \"__main__\":")
     outfile.write("\n" + indent + "pygame.init() ")
-    outfile.write("\n" + indent + "window = pygame.display.set_mode((screen_x, screen_y))") 
+    outfile.write("\n" + indent + "window = pygame.display.set_mode((screen_x, screen_y))")
     outfile.write("\n" + indent + "pygame.display.set_caption('Point & Click')")
-    outfile.write("\n" + indent + "screen = pygame.display.get_surface()") 
+    outfile.write("\n" + indent + "screen = pygame.display.get_surface()")
     outfile.write("\n" + indent + "font = pygame.font.Font(None,30)")
     outfile.write("\n" + indent + "while True:")
     outfile.write("\n" + indent + indent + "printScene()")
