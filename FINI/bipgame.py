@@ -50,6 +50,7 @@ def f1():
     currentScene = sacrif
 
 def f2():
+    global erruptCliBIP
     erruptCliBIP['img'] = img5
     errupt = {}
     errupt = {'bg' : img3, 'cli' : [erruptCliBIP, errupttext, erruptgotovolcan]}
@@ -57,15 +58,52 @@ def f2():
     currentScene = errupt
 
 def f3():
+    global erruptCliBIP
     print(None)
 
 def f6():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
     print(None)
 
 def f8():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     printScene()
 
 def f9():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     sacrificetoaster['geo']['x'] = 350.0
     sacrificetoaster['geo']['y'] = 150.0
     while(sacrificetoaster['geo']['y'] < 300.0):
@@ -81,6 +119,18 @@ def f9():
     currentScene = fin
 
 def f7():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
     erruptCliBIP['img'] = img10
     errupt = {}
     errupt = {'bg' : img3, 'cli' : [erruptCliBIP, sacrificetoaster]}
@@ -111,9 +161,29 @@ def f7():
     sacrifLave['func'] = f9
 
 def f10():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     print(None)
 
 def f5():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
     sacrificetext['img'] = img9
     sacrifCliBIP['img'] = img10
     sacrificetoaster['geo']['x'] = 745.0
@@ -143,6 +213,7 @@ def f5():
     currentScene = errupt
 
 def f4():
+    global erruptCliBIP
     sacrificetext['img'] = img8
     sacrifCliBIP['img'] = img4
     sacrifCliBIP['func'] = f5
@@ -152,6 +223,13 @@ def f4():
     currentScene = sacrif
 
 def f11():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     sacrificetext['img'] = img6
     sacrif = {}
     sacrif = {'bg' : img11, 'cli' : [sacrifCliBIP, sacrificetext, sacrificetoaster, sacrifLave]}
@@ -159,6 +237,13 @@ def f11():
     currentScene = sacrif
 
 def f12():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     sacrificetoaster['geo']['x'] = 350.0
     sacrificetoaster['geo']['y'] = 150.0
     while(sacrificetoaster['geo']['y'] < 300.0):
@@ -174,9 +259,23 @@ def f12():
     currentScene = fin
 
 def f13():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     print(None)
 
 def f14():
+    global erruptCliBIP
+    global sacrificetext
+    global sacrifCliBIP
+    global sacrificetoaster
+    global a
+    global erruptgotovolcan
+    global sacrifLave
     print(None)
 
 

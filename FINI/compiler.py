@@ -77,8 +77,15 @@ def compile(self):
         else:
             bytecode += indent * nbIndent + self.children[0].compile() + " = {}\n"
     elif self.children[1].type != 'cli' or self.children[1].type != 'scene' or self.children[1].type != 'rect':
-        if not self.children[0].compile() in varList:
-            varList.update({ self.children[0].compile() : len(varList)})
+        tmp = ""
+        for letter in self.children[0].compile():
+            if letter is "[":
+                break
+            tmp += letter
+
+        if not tmp in varList:
+            varList.update({ tmp : len(varList)})
+
     if(self.children[1].type != 'Program'):
         bytecode += indent * nbIndent + self.children[0].compile() + " = " + str(self.children[1].compile()) + "\n"
     else:
