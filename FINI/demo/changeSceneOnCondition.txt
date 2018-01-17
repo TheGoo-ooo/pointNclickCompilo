@@ -9,9 +9,9 @@ cli_switchScene = CLI("Assets/gotosc2.png",RECT(600, 200, 300, 300))
 	};
 cli_key = CLI("Assets/usekey.png", RECT(300,250,100,100))
 	{
-		key_used = 1;
-		sc_1 = SCENE("Assets/orange_scene1.png", [cli_switchScene]);
-		:sc_1;
+	key_used = 1;
+	sc_1 = SCENE("Assets/orange_scene1.png", [cli_switchScene]);
+	:sc_1;
 	};
 sc_1 = SCENE("Assets/orange_scene1.png", [cli_key, cli_switchScene]);
 sc_2 = SCENE("Assets/orange_scene2.png", [cli_empty]);

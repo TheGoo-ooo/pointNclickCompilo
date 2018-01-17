@@ -1,7 +1,7 @@
 cli_empty = CLI("Assets/nothing.png", RECT(1,1,1,1)){empty;};
 cli_switchScene = CLI("Assets/gotosc2.png",RECT(600, 200, 300, 300))
 	{
-		:sc_2;
+	:sc_2;
 	};
 sc_1 = SCENE("Assets/orange_scene1.png", [cli_switchScene]);
 sc_2 = SCENE("Assets/orange_scene2.png", [cli_empty]);
